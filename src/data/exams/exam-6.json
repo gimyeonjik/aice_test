@@ -1,0 +1,132 @@
+{
+  "id": "exam-6",
+  "examNumber": 6,
+  "title": "공유 자전거 대여량 예측 (회귀분석 심화)",
+  "scenario": "당신은 지자체 교통부서의 데이터 분석가입니다. 공유 자전거의 효율적인 배치와 관리를 위해, 날씨 정보(온도, 습도, 풍속 등)와 요일 정보를 바탕으로 특정 날짜의 '자전거 총 대여량(Rental_Count)'을 예측하는 AI 모델을 구축해야 합니다.",
+  "dataset": {
+    "filename": "bike_sharing_demand.csv",
+    "rowCount": "10,000행",
+    "target": "Rental_Count",
+    "targetDescription": "총 대여량 (연속형 수치)",
+    "taskType": "regression",
+    "features": ["Record_ID", "Temperature", "Humidity", "Wind_Speed", "Season", "Is_Holiday", "Rental_Count"],
+    "excludeColumns": ["Record_ID"]
+  },
+  "parts": [
+    { "partNumber": 1, "title": "데이터 분석 및 전처리", "questionRange": [1, 6] },
+    { "partNumber": 2, "title": "AI 모델링 및 시뮬레이션", "questionRange": [7, 9] }
+  ],
+  "questions": [
+    {
+      "type": "mcq",
+      "id": "exam-6-q1",
+      "questionNumber": 1,
+      "partNumber": 1,
+      "prompt": "본 과제의 종속변수(Output)는 무엇이며, 어떤 AI 모델링 기법을 적용해야 하는지 알맞게 짝지어진 것을 고르시오.",
+      "options": [
+        { "label": "1)", "text": "Temperature - 분류(Classification)" },
+        { "label": "2)", "text": "Temperature - 회귀(Regression)" },
+        { "label": "3)", "text": "Rental_Count - 분류(Classification)" },
+        { "label": "4)", "text": "Rental_Count - 회귀(Regression)" }
+      ],
+      "answer": 4
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-6-q2",
+      "questionNumber": 2,
+      "partNumber": 1,
+      "prompt": "전체 데이터의 개수(Observation)를 작성하시오.",
+      "hint": "[데이터 분석 / 기초정보분석] 메뉴를 활용하시오.",
+      "answerType": "integer",
+      "answer": "10000",
+      "unit": "개"
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-6-q3",
+      "questionNumber": 3,
+      "partNumber": 1,
+      "prompt": "'온도(Temperature)' 변수의 평균(Mean) 값을 확인하여 작성하시오.",
+      "hint": "[데이터 분석 / 기초정보분석] 메뉴를 활용하시오.",
+      "answerType": "float",
+      "answer": "14.98",
+      "tolerance": 1.0
+    },
+    {
+      "type": "mcq",
+      "id": "exam-6-q4",
+      "questionNumber": 4,
+      "partNumber": 1,
+      "prompt": "종속변수인 대여량(Rental_Count)과 가장 강한 '음의 상관관계(Negative Correlation)'를 가지는 변수를 고르시오. (수치가 높아질수록 자전거를 덜 타게 만드는 요인)",
+      "hint": "[데이터 분석 / 시각화 분석] 메뉴의 Heatmap을 활용하시오.",
+      "options": [
+        { "label": "1)", "text": "Temperature" },
+        { "label": "2)", "text": "Humidity" },
+        { "label": "3)", "text": "Wind_Speed" },
+        { "label": "4)", "text": "Is_Holiday" }
+      ],
+      "answer": 2
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-6-q5",
+      "questionNumber": 5,
+      "partNumber": 1,
+      "prompt": "데이터의 결측치(Missing Cells)를 다음 가이드에 따라 처리한 후, 'Humidity' 변수의 결측치를 대체한 값을 작성하시오.",
+      "hint": "[데이터 가공] 메뉴를 활용하시오.",
+      "guide": "수치형 데이터의 결측치는 '중앙값(Median)'으로 대체한다.\n대체 후 기준 변수는 덮어쓰기 하고 [가공 데이터 저장]을 클릭한다.",
+      "answerType": "float",
+      "answer": "60.20",
+      "tolerance": 1.0
+    },
+    {
+      "type": "action",
+      "id": "exam-6-q6",
+      "questionNumber": 6,
+      "partNumber": 1,
+      "prompt": "문자열로 된 'Season'과 'Is_Holiday' 컬럼을 AI가 이해할 수 있도록 변환하시오.",
+      "instruction": "One-Hot Encoding 또는 Label Encoding을 적용하여 숫자로 변환하시오."
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-6-q7",
+      "questionNumber": 7,
+      "partNumber": 2,
+      "prompt": "모델의 R2 Score(결정계수) 값은 얼마인가?",
+      "hint": "[AI모델 학습] 메뉴를 활용하시오.",
+      "guide": "작업 데이터: 가공이 완료된 데이터\n제외 컬럼: 'Record_ID'\n종속변수(Output): 'Rental_Count'\n알고리즘: 'Decision Tree Regressor' (의사결정 나무 회귀)\n학습/검증 비율: 80 : 20\n정답 작성: 소수점 넷째 자리까지 반올림 (예: 0.8523)",
+      "answerType": "float",
+      "answer": "0.0000",
+      "tolerance": 0.05
+    },
+    {
+      "type": "mcq",
+      "id": "exam-6-q8",
+      "questionNumber": 8,
+      "partNumber": 2,
+      "prompt": "학습된 모델 분석 결과, 자전거 대여량(Rental_Count)을 결정하는 데 가장 큰 영향을 미치는 변수(Feature Importance 1위)는 무엇인가?",
+      "hint": "[AI모델 활용 / 모델분석] 메뉴를 활용하시오.",
+      "options": [
+        { "label": "1)", "text": "Temperature" },
+        { "label": "2)", "text": "Humidity" },
+        { "label": "3)", "text": "Season" },
+        { "label": "4)", "text": "Is_Holiday" }
+      ],
+      "answer": 1
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-6-q9",
+      "questionNumber": 9,
+      "partNumber": 2,
+      "prompt": "다음 날씨 조건일 때, 자전거 대여량(Rental_Count)을 예측하시오.",
+      "hint": "[AI모델 활용 / 시뮬레이션] 메뉴를 활용하시오.",
+      "inputValues": "Temperature: 25.5 (따뜻함)\nHumidity: 40.0 (쾌적함)\nWind_Speed: 1.5 (바람 적음)\nSeason: Fall (가을)\nIs_Holiday: Yes (휴일)",
+      "answerType": "float",
+      "answer": "0",
+      "tolerance": 100,
+      "unit": "대"
+    }
+  ]
+}

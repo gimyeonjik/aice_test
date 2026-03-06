@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc -l /Users/gimyeonjik/Documents/aice_web/모의고사/데이터셋/*.csv)",
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --use-npm --yes)",
+      "Bash(npm init -y)",
+      "Bash(npm install next@latest react@latest react-dom@latest typescript @types/react @types/node @types/react-dom)",
+      "Bash(npm install tailwindcss @tailwindcss/postcss postcss @vercel/kv react-hook-form zod)",
+      "Bash(npm cache clean --force)",
+      "Bash(sudo chown -R 501:20 \"/Users/gimyeonjik/.npm\")",
+      "Bash(npm --version)",
+      "Bash(node --version)",
+      "Bash(npm install tailwindcss @tailwindcss/postcss postcss)",
+      "Bash(npm install next@latest react@latest react-dom@latest typescript @types/react @types/node @types/react-dom tailwindcss @tailwindcss/postcss postcss @vercel/kv react-hook-form zod --legacy-peer-deps)",
+      "Bash(npm uninstall @vercel/kv)",
+      "Bash(npm install @upstash/redis --legacy-peer-deps)",
+      "Bash(npm install clsx tailwind-merge --legacy-peer-deps)",
+      "Bash(python3:*)",
+      "Bash(npx next build)"
+    ]
+  }
+}

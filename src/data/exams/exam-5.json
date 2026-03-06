@@ -1,0 +1,132 @@
+{
+  "id": "exam-5",
+  "examNumber": 5,
+  "title": "아파트 매매 가격 예측 (회귀분석)",
+  "scenario": "당신은 부동산 프롭테크 기업의 데이터 분석가입니다. 아파트의 다양한 정보(면적, 지하철역 거리, 건축 연도 등)를 바탕으로 실제 '아파트 매매 가격(Price)'을 예측하는 AI 모델을 구축해야 합니다.",
+  "dataset": {
+    "filename": "house_price_prediction.csv",
+    "rowCount": "8,000행",
+    "target": "Price",
+    "targetDescription": "매매 가격 (단위: 만원)",
+    "taskType": "regression",
+    "features": ["House_ID", "Area", "Distance_To_Station", "Year_Built", "Heating_Type", "Price"],
+    "excludeColumns": ["House_ID"]
+  },
+  "parts": [
+    { "partNumber": 1, "title": "데이터 분석 및 전처리", "questionRange": [1, 6] },
+    { "partNumber": 2, "title": "AI 모델링 및 시뮬레이션", "questionRange": [7, 9] }
+  ],
+  "questions": [
+    {
+      "type": "mcq",
+      "id": "exam-5-q1",
+      "questionNumber": 1,
+      "partNumber": 1,
+      "prompt": "본 과제는 연속적인 숫자 값(가격)을 예측하는 문제입니다. 이러한 예측을 해결하기 위해 사용하는 AI 모델링 기법은 무엇입니까?",
+      "options": [
+        { "label": "1)", "text": "분류 (Classification)" },
+        { "label": "2)", "text": "군집화 (Clustering)" },
+        { "label": "3)", "text": "회귀 (Regression)" },
+        { "label": "4)", "text": "연관 분석 (Association)" }
+      ],
+      "answer": 3
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-5-q2",
+      "questionNumber": 2,
+      "partNumber": 1,
+      "prompt": "전체 데이터의 개수(Observation)를 작성하시오.",
+      "hint": "[데이터 분석 / 기초정보분석] 메뉴를 활용하시오.",
+      "answerType": "integer",
+      "answer": "8000",
+      "unit": "개"
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-5-q3",
+      "questionNumber": 3,
+      "partNumber": 1,
+      "prompt": "'지하철역 거리(Distance_To_Station)' 변수의 평균(Mean) 값을 확인하여 작성하시오.",
+      "hint": "[데이터 분석 / 기초정보분석] 메뉴를 활용하시오.",
+      "answerType": "float",
+      "answer": "10.11",
+      "tolerance": 1.0
+    },
+    {
+      "type": "mcq",
+      "id": "exam-5-q4",
+      "questionNumber": 4,
+      "partNumber": 1,
+      "prompt": "종속변수인 매매 가격(Price)과 가장 강한 '음의 상관관계(Negative Correlation)'를 가지는 변수를 고르시오. (값이 커질수록 가격이 떨어지는 변수)",
+      "hint": "[데이터 분석 / 시각화 분석] 메뉴의 Heatmap을 활용하시오.",
+      "options": [
+        { "label": "1)", "text": "Area" },
+        { "label": "2)", "text": "Distance_To_Station" },
+        { "label": "3)", "text": "Year_Built" },
+        { "label": "4)", "text": "Heating_Type" }
+      ],
+      "answer": 2
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-5-q5",
+      "questionNumber": 5,
+      "partNumber": 1,
+      "prompt": "데이터의 결측치(Missing Cells)를 다음 가이드에 따라 처리한 후, 'Distance_To_Station' 변수의 결측치를 대체한 값을 작성하시오.",
+      "hint": "[데이터 가공] 메뉴를 활용하시오.",
+      "guide": "수치형 데이터의 결측치는 '중앙값(Median)'으로 대체한다.\n대체 후 기존 변수는 삭제 또는 덮어쓰기 하고 [가공 데이터 저장]을 클릭한다.",
+      "answerType": "float",
+      "answer": "10.00",
+      "tolerance": 1.0
+    },
+    {
+      "type": "action",
+      "id": "exam-5-q6",
+      "questionNumber": 6,
+      "partNumber": 1,
+      "prompt": "문자열로 된 'Heating_Type(난방방식)' 컬럼을 AI가 이해할 수 있도록 변환하시오.",
+      "instruction": "One-Hot Encoding(원-핫 인코딩) 또는 Label Encoding(레이블 인코딩)을 적용하여 숫자로 변환하시오."
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-5-q7",
+      "questionNumber": 7,
+      "partNumber": 2,
+      "prompt": "모델의 R2 Score(결정계수) 값은 얼마인가?",
+      "hint": "[AI모델 학습] 메뉴를 활용하시오.",
+      "guide": "작업 데이터: 가공이 완료된 데이터\n제외 컬럼: 'House_ID'\n종속변수(Output): 'Price'\n알고리즘: 'Random Forest Regressor' (랜덤 포레스트 회귀)\n학습/검증 비율: 80 : 20\n정답 작성: 소수점 넷째 자리까지 반올림 (예: 0.8523)",
+      "answerType": "float",
+      "answer": "0.0000",
+      "tolerance": 0.05
+    },
+    {
+      "type": "mcq",
+      "id": "exam-5-q8",
+      "questionNumber": 8,
+      "partNumber": 2,
+      "prompt": "학습된 모델 분석 결과, 아파트 가격(Price)을 결정하는 데 가장 큰 영향을 미치는 변수(Feature Importance 1위)는 무엇인가?",
+      "hint": "[AI모델 활용 / 모델분석] 메뉴를 활용하시오.",
+      "options": [
+        { "label": "1)", "text": "Area" },
+        { "label": "2)", "text": "Distance_To_Station" },
+        { "label": "3)", "text": "Year_Built" },
+        { "label": "4)", "text": "Heating_Type" }
+      ],
+      "answer": 1
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-5-q9",
+      "questionNumber": 9,
+      "partNumber": 2,
+      "prompt": "다음 신규 아파트 매물의 매매 가격(Price)을 예측하시오.",
+      "hint": "[AI모델 활용 / 시뮬레이션] 메뉴를 활용하시오.",
+      "inputValues": "Area: 34.0 (평)\nDistance_To_Station: 3.0 (분)\nYear_Built: 2020\nHeating_Type: District (또는 인코딩된 숫자)",
+      "answerType": "float",
+      "answer": "0",
+      "tolerance": 5000,
+      "unit": "만원"
+    }
+  ]
+}

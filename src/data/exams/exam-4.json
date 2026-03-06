@@ -1,0 +1,131 @@
+{
+  "id": "exam-4",
+  "examNumber": 4,
+  "title": "쇼핑몰 고객 군집화 (비지도 학습)",
+  "scenario": "당신은 K-백화점의 마케팅 데이터 분석가입니다. 최근 수집된 15,000명의 고객 구매 데이터를 바탕으로, 비슷한 소비 패턴을 가진 고객들을 그룹(Cluster)으로 묶어 맞춤형 타겟 마케팅 전략을 수립하고자 합니다.",
+  "dataset": {
+    "filename": "shopping_mall_customers_v2.csv",
+    "rowCount": "15,000행",
+    "target": null,
+    "targetDescription": "없음 (정답이 없는 비지도 학습 과제)",
+    "taskType": "clustering",
+    "features": ["CustomerID", "Gender", "Age", "Annual_Income", "Spending_Score"],
+    "excludeColumns": ["CustomerID"]
+  },
+  "parts": [
+    { "partNumber": 1, "title": "데이터 분석 및 전처리", "questionRange": [1, 5] },
+    { "partNumber": 2, "title": "AI 모델링 및 시뮬레이션", "questionRange": [6, 9] }
+  ],
+  "questions": [
+    {
+      "type": "mcq",
+      "id": "exam-4-q1",
+      "questionNumber": 1,
+      "partNumber": 1,
+      "prompt": "머신러닝의 학습 방법 중, 종속변수(정답) 없이 독립변수들 간의 유사성을 바탕으로 데이터를 그룹화하는 기법을 고르시오.",
+      "options": [
+        { "label": "1)", "text": "선형 회귀 (Linear Regression)" },
+        { "label": "2)", "text": "이진 분류 (Binary Classification)" },
+        { "label": "3)", "text": "군집화 (Clustering)" },
+        { "label": "4)", "text": "의사결정 나무 (Decision Tree)" }
+      ],
+      "answer": 3
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-4-q2",
+      "questionNumber": 2,
+      "partNumber": 1,
+      "prompt": "데이터의 전체 개수(Observation)를 작성하시오.",
+      "hint": "[데이터 분석 / 기초정보분석] 메뉴를 활용하시오.",
+      "answerType": "integer",
+      "answer": "15000",
+      "unit": "개"
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-4-q3",
+      "questionNumber": 3,
+      "partNumber": 1,
+      "prompt": "'연간소득(Annual_Income)' 변수의 평균(Mean) 값을 확인하여 작성하시오.",
+      "hint": "[데이터 분석 / 기초정보분석] 메뉴를 활용하시오.",
+      "answerType": "float",
+      "answer": "55.05",
+      "tolerance": 1.0
+    },
+    {
+      "type": "mcq",
+      "id": "exam-4-q4",
+      "questionNumber": 4,
+      "partNumber": 1,
+      "prompt": "'연간소득(Annual_Income)'과 '소비점수(Spending_Score)'를 각각 X축과 Y축으로 하여 산점도(Scatter Plot)를 그렸을 때, 데이터는 대략 몇 개의 덩어리로 나뉘어 보이는지 고르시오.",
+      "hint": "[데이터 분석 / 시각화 분석] 메뉴를 활용하시오.",
+      "options": [
+        { "label": "1)", "text": "2개" },
+        { "label": "2)", "text": "3개" },
+        { "label": "3)", "text": "5개" },
+        { "label": "4)", "text": "10개 이상" }
+      ],
+      "answer": 3
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-4-q5",
+      "questionNumber": 5,
+      "partNumber": 1,
+      "prompt": "데이터의 결측치(Missing Cells)를 다음 가이드에 따라 처리한 후, 'Annual_Income' 변수의 결측치를 대체한 값을 작성하시오.",
+      "hint": "[데이터 가공] 메뉴를 활용하시오.",
+      "guide": "수치형 데이터의 결측치는 '중앙값(Median)'으로 대체한다.\n모든 결측치 처리 후 [가공 데이터 저장]을 클릭하여 저장한다.",
+      "answerType": "float",
+      "answer": "55.40",
+      "tolerance": 1.0
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-4-q6",
+      "questionNumber": 6,
+      "partNumber": 2,
+      "prompt": "K-Means 알고리즘 설정 시, n_clusters(군집 수)는 몇 개로 설정해야 하는가?",
+      "hint": "[AI모델 학습] 메뉴를 활용하시오.",
+      "guide": "작업 데이터: 문항 5에서 저장한 가공 데이터를 선택한다.\n제외 컬럼: 'CustomerID'를 제외한다.\n알고리즘: 'K-Means'를 선택한다.\n클러스터 수(K): 문항 4번에서 시각화로 확인한 그룹의 개수를 입력한다.",
+      "answerType": "integer",
+      "answer": "5",
+      "unit": "개"
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-4-q7",
+      "questionNumber": 7,
+      "partNumber": 2,
+      "prompt": "학습된 군집화 모델을 분석한 결과, 연간소득이 매우 높고 소비점수도 가장 높은 이른바 'VIP 고객층'은 주로 어떤 특성을 띠는지 확인하시오. 각 군집별 Annual_Income과 Spending_Score의 평균값이 모두 가장 높은 군집 번호(Cluster)를 기재하시오.",
+      "hint": "[AI모델 활용 / 모델분석] 메뉴를 활용하시오.",
+      "answerType": "integer",
+      "answer": "0",
+      "unit": "번"
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-4-q8",
+      "questionNumber": 8,
+      "partNumber": 2,
+      "prompt": "아래 조건의 신규 고객이 몇 번 군집으로 예측되는지 작성하시오.",
+      "hint": "[AI모델 활용 / 시뮬레이션] 메뉴를 활용하시오.",
+      "inputValues": "Gender: Female\nAge: 35\nAnnual_Income: 88.5 (고소득)\nSpending_Score: 85.0 (고소비)",
+      "answerType": "integer",
+      "answer": "0",
+      "unit": "번"
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-4-q9",
+      "questionNumber": 9,
+      "partNumber": 2,
+      "prompt": "아래 조건의 신규 고객이 몇 번 군집으로 예측되는지 작성하시오.",
+      "hint": "[AI모델 활용 / 시뮬레이션] 메뉴를 활용하시오.",
+      "inputValues": "Gender: Male\nAge: 42\nAnnual_Income: 85.0 (고소득)\nSpending_Score: 15.5 (저소비)",
+      "answerType": "integer",
+      "answer": "0",
+      "unit": "번"
+    }
+  ]
+}
