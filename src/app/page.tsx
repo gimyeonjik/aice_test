@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { getAllExamSummaries } from "@/lib/exam-loader";
+import { motion } from "framer-motion";
+import { BrainCircuit, BookOpen, Database, Target, CheckCircle2, ChevronRight, User } from "lucide-react";
 
 const examSummaries = getAllExamSummaries();
 
@@ -13,17 +15,19 @@ const taskTypeLabel: Record<string, string> = {
 };
 
 const taskTypeColor: Record<string, string> = {
-  clustering: "bg-purple-100 text-purple-700",
-  regression: "bg-blue-100 text-blue-700",
-  classification: "bg-green-100 text-green-700",
+  clustering: "bg-purple-100/80 text-purple-700 ring-1 ring-purple-500/20",
+  regression: "bg-blue-100/80 text-blue-700 ring-1 ring-blue-500/20",
+  classification: "bg-emerald-100/80 text-emerald-700 ring-1 ring-emerald-500/20",
 };
 
 export default function HomePage() {
   const router = useRouter();
   const [name, setName] = useState("");
   const [selectedExam, setSelectedExam] = useState<string | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
     const saved = localStorage.getItem("aice-student-name");
     if (saved) setName(saved);
   }, []);
@@ -38,138 +42,174 @@ export default function HomePage() {
       return;
     }
     localStorage.setItem("aice-student-name", name.trim());
-    router.push(
-      `/exam/${selectedExam}?name=${encodeURIComponent(name.trim())}`
-    );
+    router.push(`/exam/${selectedExam}?name=${encodeURIComponent(name.trim())}`);
   }
 
   const selected = examSummaries.find((e) => e.id === selectedExam);
 
+  if (!isMounted) return null; // Prevent hydration mismatch for framer-motion
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-slate-50">
+    <div className="min-h-screen bg-[#FAFAFC] selection:bg-indigo-100 selection:text-indigo-900 font-sans text-slate-900">
+      {/* Abstract Background Elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-indigo-200/40 blur-[100px]" />
+        <div className="absolute bottom-[-10%] right-[-5%] w-[50%] h-[50%] rounded-full bg-blue-100/40 blur-[120px]" />
+      </div>
+
       {/* Header */}
-      <header className="bg-white border-b border-slate-200 shadow-sm">
-        <div className="max-w-4xl mx-auto px-4 py-6">
-          <h1 className="text-2xl font-bold text-indigo-600">
-            AICE Junior 모의고사
-          </h1>
-          <p className="text-slate-500 mt-1">
-            실전 모의고사로 AICE 주니어 자격증을 준비하세요
-          </p>
+      <header className="relative z-10 sticky top-0 bg-white/70 backdrop-blur-xl border-b border-white/20 shadow-[0_4px_30px_rgba(0,0,0,0.03)]">
+        <div className="max-w-5xl mx-auto px-6 h-20 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-blue-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+              <BrainCircuit className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h1 className="text-xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
+                AICE Junior
+              </h1>
+              <p className="text-[11px] font-medium text-slate-500 uppercase tracking-wider">Practice Platform</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 text-sm text-slate-500 font-medium">
+            <BookOpen className="w-4 h-4" />
+            <span>{examSummaries.length} Exams Available</span>
+          </div>
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 py-8">
-        {/* Name Input */}
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-8">
-          <label
-            htmlFor="student-name"
-            className="block text-sm font-medium text-slate-700 mb-2"
-          >
-            이름을 입력하세요
-          </label>
-          <input
-            id="student-name"
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="홍길동"
-            className="w-full max-w-xs px-4 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base"
-          />
-        </div>
+      <main className="relative z-10 max-w-5xl mx-auto px-6 py-12">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-4">
+            실전처럼 완벽하게,<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-500">
+              AICE 주니어 모의고사
+            </span>
+          </h2>
+          <p className="text-lg text-slate-500 max-w-2xl mx-auto">
+            실제 시험과 동일한 환경에서 AI 모델링 역량을 점검해보세요.
+            데이터 분석부터 모델 학습, 결과 해석까지 실전 감각을 키울 수 있습니다.
+          </p>
+        </motion.div>
 
-        {/* Exam Grid */}
-        <h2 className="text-lg font-semibold text-slate-800 mb-4">
-          모의고사 선택
-        </h2>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {examSummaries.map((exam) => (
-            <button
-              key={exam.id}
-              onClick={() => setSelectedExam(exam.id)}
-              className={`rounded-xl shadow-sm border-2 p-5 text-left transition-all group ${
-                selectedExam === exam.id
-                  ? "border-indigo-500 bg-indigo-50 shadow-md ring-1 ring-indigo-500"
-                  : "border-slate-200 bg-white hover:shadow-md hover:border-slate-300"
-              }`}
-            >
-              <div className="flex items-center justify-between mb-3">
-                <span
-                  className={`text-2xl font-bold ${
-                    selectedExam === exam.id
-                      ? "text-indigo-600"
-                      : "text-slate-700"
-                  }`}
-                >
-                  {exam.examNumber}회
-                </span>
-                <span
-                  className={`text-xs font-medium px-2.5 py-1 rounded-full ${
-                    taskTypeColor[exam.dataset.taskType]
-                  }`}
-                >
-                  {taskTypeLabel[exam.dataset.taskType]}
-                </span>
-              </div>
-              <h3
-                className={`font-medium mb-2 transition-colors ${
-                  selectedExam === exam.id
-                    ? "text-indigo-700"
-                    : "text-slate-800 group-hover:text-indigo-600"
-                }`}
-              >
-                {exam.title}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-8">
+          {/* Left Column: Exams Grid */}
+          <div className="space-y-6">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-200">
+              <h3 className="text-lg font-bold flex items-center gap-2">
+                <Target className="w-5 h-5 text-indigo-500" />
+                모의고사 선택
               </h3>
-              <div className="text-sm text-slate-500 space-y-1">
-                <p>데이터: {exam.dataset.filename}</p>
-                <p>문항 수: {exam.questionCount}문제</p>
-              </div>
-              {selectedExam === exam.id && (
-                <div className="mt-3 flex items-center gap-1.5 text-sm font-medium text-indigo-600">
-                  <svg
-                    className="w-4 h-4"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
+            </div>
+            
+            <div className="grid gap-4 sm:grid-cols-2">
+              {examSummaries.map((exam, index) => {
+                const isSelected = selectedExam === exam.id;
+                return (
+                  <motion.button
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: index * 0.05 }}
+                    key={exam.id}
+                    onClick={() => setSelectedExam(exam.id)}
+                    className={`group relative text-left rounded-2xl p-5 transition-all duration-300 ${
+                      isSelected
+                        ? "bg-white border-2 border-indigo-500 shadow-xl shadow-indigo-500/10 scale-[1.02]"
+                        : "bg-white/80 border-2 border-transparent hover:border-slate-200 shadow-sm hover:shadow-md hover:bg-white"
+                    }`}
                   >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  선택됨
-                </div>
-              )}
-            </button>
-          ))}
-        </div>
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-2">
+                        <span className={`flex items-center justify-center w-8 h-8 rounded-lg font-bold text-sm ${
+                          isSelected ? "bg-indigo-600 text-white" : "bg-slate-100 text-slate-700 group-hover:bg-slate-200"
+                        }`}>
+                          {exam.examNumber}
+                        </span>
+                        <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${taskTypeColor[exam.dataset.taskType]}`}>
+                          {taskTypeLabel[exam.dataset.taskType]}
+                        </span>
+                      </div>
+                      {isSelected && (
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          className="text-indigo-500"
+                        >
+                          <CheckCircle2 className="w-6 h-6" />
+                        </motion.div>
+                      )}
+                    </div>
+                    
+                    <h4 className={`text-lg font-bold mb-2 ${isSelected ? "text-indigo-900" : "text-slate-800"}`}>
+                      {exam.title}
+                    </h4>
+                    
+                    <div className="space-y-1.5 mt-4">
+                      <div className="flex items-center gap-2 text-sm text-slate-500">
+                        <Database className="w-4 h-4 text-slate-400" />
+                        <span className="truncate">{exam.dataset.filename}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-slate-500">
+                        <BookOpen className="w-4 h-4 text-slate-400" />
+                        <span>{exam.questionCount} 문항</span>
+                      </div>
+                    </div>
+                  </motion.button>
+                );
+              })}
+            </div>
+          </div>
 
-        {/* Start Button */}
-        <div className="mt-8">
-          {selected && (
-            <p className="text-sm text-slate-500 mb-3 text-center">
-              <span className="font-medium text-indigo-600">
-                {selected.examNumber}회 - {selected.title}
-              </span>
-              을 선택하셨습니다.
-            </p>
-          )}
-          <button
-            onClick={handleStart}
-            disabled={!name.trim() || !selectedExam}
-            className="w-full max-w-md mx-auto block py-3.5 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed shadow-sm text-lg"
-          >
-            시험 시작하기
-          </button>
-          {(!name.trim() || !selectedExam) && (
-            <p className="text-xs text-slate-400 text-center mt-2">
-              {!name.trim() && !selectedExam
-                ? "이름을 입력하고 모의고사를 선택해주세요"
-                : !name.trim()
-                  ? "이름을 입력해주세요"
-                  : "모의고사를 선택해주세요"}
-            </p>
-          )}
+          {/* Right Column: User Info & Actions */}
+          <div className="space-y-6">
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="bg-white rounded-3xl p-6 shadow-xl shadow-slate-200/50 border border-slate-100"
+            >
+              <div className="mb-6">
+                <label htmlFor="student-name" className="flex items-center gap-2 text-sm font-bold text-slate-700 mb-3">
+                  <User className="w-4 h-4" /> 응시자 이름
+                </label>
+                <input
+                  id="student-name"
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="홍길동"
+                  className="w-full bg-slate-50 px-4 py-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 text-base font-medium transition-all"
+                />
+              </div>
+
+              <div className="bg-slate-50 rounded-2xl p-4 mb-6 border border-slate-100">
+                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">선택된 시험</h4>
+                {selected ? (
+                  <div>
+                    <div className="font-bold text-slate-800">{selected.examNumber}회 모의고사</div>
+                    <div className="text-sm text-slate-500 mt-1 line-clamp-2">{selected.title}</div>
+                  </div>
+                ) : (
+                  <div className="text-sm text-slate-400 italic">왼쪽 목록에서 시험을 선택해주세요.</div>
+                )}
+              </div>
+
+              <button
+                onClick={handleStart}
+                disabled={!name.trim() || !selectedExam}
+                className="group relative w-full flex items-center justify-center gap-2 py-4 bg-slate-900 text-white font-bold rounded-xl hover:bg-indigo-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-slate-900 overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <span className="relative z-10">시험 시작하기</span>
+                <ChevronRight className="relative z-10 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </motion.div>
+          </div>
         </div>
       </main>
     </div>
