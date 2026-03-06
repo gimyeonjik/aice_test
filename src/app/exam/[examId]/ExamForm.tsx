@@ -62,10 +62,38 @@ export default function ExamForm({ exam, studentName }: Props) {
   }
 
   const answeredCount = exam.questions.filter(
-    (q) => q.type === "action" || (answers[q.id] && answers[q.id].trim() !== "")
+    (q) => q.type === "action" || isQuestionAnswered(q)
   ).length;
 
   const progressPercentage = (answeredCount / exam.questions.length) * 100;
+
+  const allAnswered = answeredCount === exam.questions.length;
+
+  const unansweredQuestions = exam.questions.filter(
+    (q) => q.type !== "action" && !isQuestionAnswered(q)
+  );
+
+  function isQuestionAnswered(q: ExamForClient["questions"][number]): boolean {
+    if (q.type === "action") return true;
+    if ("subFields" in q && Array.isArray(q.subFields)) {
+      try {
+        const subs = JSON.parse(answers[q.id] || "[]");
+        return q.subFields.every((_: unknown, idx: number) => subs[idx] && String(subs[idx]).trim() !== "");
+      } catch {
+        return false;
+      }
+    }
+    return !!(answers[q.id] && answers[q.id].trim() !== "");
+  }
+
+  function scrollToQuestion(questionId: string) {
+    const el = document.getElementById(questionId);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      el.classList.add("ring-2", "ring-red-400", "ring-offset-2");
+      setTimeout(() => el.classList.remove("ring-2", "ring-red-400", "ring-offset-2"), 2000);
+    }
+  }
 
   if (!mounted) return null;
 
@@ -191,11 +219,12 @@ export default function ExamForm({ exam, studentName }: Props) {
                 .map((q, qIndex) => (
                   <motion.div
                     key={q.id}
+                    id={q.id}
                     initial={{ opacity: 0, scale: 0.98 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ duration: 0.4 }}
-                    className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/60 hover:shadow-md transition-shadow relative overflow-hidden group"
+                    className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/60 hover:shadow-md transition-all relative overflow-hidden group"
                   >
                     {/* Active Indicator Line */}
                     <div className={`absolute top-0 left-0 bottom-0 w-1.5 transition-colors duration-300 ${answers[q.id] || q.type === 'action' ? 'bg-indigo-500' : 'bg-transparent group-hover:bg-slate-200'}`} />
@@ -371,28 +400,59 @@ export default function ExamForm({ exam, studentName }: Props) {
         ))}
 
         {/* Submit Section */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           className="pt-12 pb-8"
         >
-          <div className="bg-white rounded-3xl p-8 shadow-xl shadow-indigo-500/5 border border-indigo-100 text-center relative overflow-hidden">
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-50" />
-            
-            <h3 className="text-2xl font-bold text-slate-800 mb-2">모든 문항을 작성하셨나요?</h3>
-            <p className="text-slate-500 mb-8">제출 후에는 답안을 수정할 수 없습니다.</p>
-            
+          <div className={`bg-white rounded-3xl p-8 shadow-xl border text-center relative overflow-hidden ${allAnswered ? 'shadow-indigo-500/5 border-indigo-100' : 'shadow-slate-200/40 border-slate-200'}`}>
+            <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent to-transparent opacity-50 ${allAnswered ? 'via-indigo-500' : 'via-slate-300'}`} />
+
+            {allAnswered ? (
+              <>
+                <div className="w-14 h-14 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-4">
+                  <CheckCircle2 className="w-7 h-7 text-emerald-600" />
+                </div>
+                <h3 className="text-2xl font-bold text-slate-800 mb-2">모든 문항을 작성하셨습니다!</h3>
+                <p className="text-slate-500 mb-8">제출 후에는 답안을 수정할 수 없습니다.</p>
+              </>
+            ) : (
+              <>
+                <div className="w-14 h-14 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4">
+                  <AlertCircle className="w-7 h-7 text-amber-600" />
+                </div>
+                <h3 className="text-2xl font-bold text-slate-800 mb-2">아직 풀지 않은 문항이 있습니다</h3>
+                <p className="text-slate-500 mb-4">모든 문항에 답변해야 제출할 수 있습니다.</p>
+                <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
+                  {unansweredQuestions.map((q) => (
+                    <button
+                      key={q.id}
+                      onClick={() => scrollToQuestion(q.id)}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-50 text-red-600 text-sm font-bold rounded-full border border-red-200 hover:bg-red-100 transition-colors cursor-pointer"
+                    >
+                      <HelpCircle className="w-3.5 h-3.5" />
+                      문항 {q.questionNumber}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+
             <button
               onClick={() => setShowConfirm(true)}
-              disabled={submitting}
-              className="relative inline-flex items-center justify-center gap-2 px-8 py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-indigo-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed group overflow-hidden shadow-lg shadow-slate-900/20"
+              disabled={submitting || !allAnswered}
+              className={`relative inline-flex items-center justify-center gap-2 px-8 py-4 font-bold rounded-2xl transition-all duration-300 disabled:cursor-not-allowed overflow-hidden shadow-lg ${
+                allAnswered
+                  ? 'bg-slate-900 text-white hover:bg-indigo-600 shadow-slate-900/20 group'
+                  : 'bg-slate-200 text-slate-400 shadow-none'
+              }`}
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <Send className="relative z-10 w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+              {allAnswered && <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />}
+              <Send className={`relative z-10 w-5 h-5 ${allAnswered ? 'group-hover:translate-x-1 group-hover:-translate-y-1' : ''} transition-transform`} />
               <span className="relative z-10 text-lg">{submitting ? "제출 처리 중..." : "최종 답안 제출하기"}</span>
             </button>
-            
+
             <div className="mt-6 flex items-center justify-center gap-2 text-sm">
               <span className="text-slate-400 font-medium">현재 응답률:</span>
               <span className={`font-bold ${progressPercentage === 100 ? 'text-emerald-500' : 'text-indigo-600'}`}>
