@@ -1,11 +1,19 @@
 import { Redis } from "@upstash/redis";
 import type { Submission } from "@/types/submission";
 
-function getRedis() {
-  return new Redis({
-    url: process.env.KV_REST_API_URL!,
-    token: process.env.KV_REST_API_TOKEN!,
-  });
+function getRedis(): Redis {
+  const url = process.env.KV_REST_API_URL;
+  const token = process.env.KV_REST_API_TOKEN;
+
+  if (!url || !token) {
+    throw new Error(
+      "Redis 환경변수가 설정되지 않았습니다. " +
+      "Vercel 대시보드에서 Upstash Redis 통합을 추가하고 " +
+      "KV_REST_API_URL, KV_REST_API_TOKEN 환경변수를 확인하세요."
+    );
+  }
+
+  return new Redis({ url, token });
 }
 
 // ─── Submissions ───
@@ -28,7 +36,9 @@ export async function getSubmission(id: string): Promise<Submission | null> {
   const redis = getRedis();
   const data = await redis.get<string>(`submission:${id}`);
   if (!data) return null;
-  return typeof data === "string" ? JSON.parse(data) : (data as unknown as Submission);
+  return typeof data === "string"
+    ? JSON.parse(data)
+    : (data as unknown as Submission);
 }
 
 export async function getAllSubmissions(): Promise<Submission[]> {
@@ -67,10 +77,17 @@ export async function deleteSubmission(id: string): Promise<void> {
 export async function getAnswerOverrides(
   examId: string
 ): Promise<Record<string, string>> {
-  const redis = getRedis();
-  const data = await redis.get<string>(`answers:override:${examId}`);
-  if (!data) return {};
-  return typeof data === "string" ? JSON.parse(data) : (data as unknown as Record<string, string>);
+  try {
+    const redis = getRedis();
+    const data = await redis.get<string>(`answers:override:${examId}`);
+    if (!data) return {};
+    return typeof data === "string"
+      ? JSON.parse(data)
+      : (data as unknown as Record<string, string>);
+  } catch {
+    // Redis가 설정되지 않은 경우 기본 정답 사용
+    return {};
+  }
 }
 
 export async function setAnswerOverrides(
