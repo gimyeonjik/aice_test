@@ -5,7 +5,7 @@
   "scenario": "당신은 K-백화점의 마케팅 데이터 분석가입니다. 최근 수집된 15,000명의 고객 구매 데이터를 바탕으로, 비슷한 소비 패턴을 가진 고객들을 그룹(Cluster)으로 묶어 맞춤형 타겟 마케팅 전략을 수립하고자 합니다.",
   "dataset": {
     "filename": "shopping_mall_customers_v2.csv",
-    "rowCount": "15,000행",
+    "rowCount": "1,000행",
     "target": null,
     "targetDescription": "없음 (정답이 없는 비지도 학습 과제)",
     "taskType": "clustering",
@@ -39,7 +39,7 @@
       "prompt": "데이터의 전체 개수(Observation)를 작성하시오.",
       "hint": "[데이터 분석 / 기초정보분석] 메뉴를 활용하시오.",
       "answerType": "integer",
-      "answer": "15000",
+      "answer": "1000",
       "unit": "개"
     },
     {
@@ -50,7 +50,7 @@
       "prompt": "'연간소득(Annual_Income)' 변수의 평균(Mean) 값을 확인하여 작성하시오.",
       "hint": "[데이터 분석 / 기초정보분석] 메뉴를 활용하시오.",
       "answerType": "float",
-      "answer": "55.05",
+      "answer": "53.94",
       "tolerance": 1.0
     },
     {
@@ -77,7 +77,7 @@
       "hint": "[데이터 가공] 메뉴를 활용하시오.",
       "guide": "수치형 데이터의 결측치는 '중앙값(Median)'으로 대체한다.\n모든 결측치 처리 후 [가공 데이터 저장]을 클릭하여 저장한다.",
       "answerType": "float",
-      "answer": "55.40",
+      "answer": "52.90",
       "tolerance": 1.0
     },
     {

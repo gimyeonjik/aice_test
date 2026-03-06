@@ -5,7 +5,7 @@
   "scenario": "당신은 부동산 프롭테크 기업의 데이터 분석가입니다. 아파트의 다양한 정보(면적, 지하철역 거리, 건축 연도 등)를 바탕으로 실제 '아파트 매매 가격(Price)'을 예측하는 AI 모델을 구축해야 합니다.",
   "dataset": {
     "filename": "house_price_prediction.csv",
-    "rowCount": "8,000행",
+    "rowCount": "1,000행",
     "target": "Price",
     "targetDescription": "매매 가격 (단위: 만원)",
     "taskType": "regression",
@@ -39,7 +39,7 @@
       "prompt": "전체 데이터의 개수(Observation)를 작성하시오.",
       "hint": "[데이터 분석 / 기초정보분석] 메뉴를 활용하시오.",
       "answerType": "integer",
-      "answer": "8000",
+      "answer": "1000",
       "unit": "개"
     },
     {
@@ -50,7 +50,7 @@
       "prompt": "'지하철역 거리(Distance_To_Station)' 변수의 평균(Mean) 값을 확인하여 작성하시오.",
       "hint": "[데이터 분석 / 기초정보분석] 메뉴를 활용하시오.",
       "answerType": "float",
-      "answer": "10.11",
+      "answer": "10.17",
       "tolerance": 1.0
     },
     {
@@ -77,7 +77,7 @@
       "hint": "[데이터 가공] 메뉴를 활용하시오.",
       "guide": "수치형 데이터의 결측치는 '중앙값(Median)'으로 대체한다.\n대체 후 기존 변수는 삭제 또는 덮어쓰기 하고 [가공 데이터 저장]을 클릭한다.",
       "answerType": "float",
-      "answer": "10.00",
+      "answer": "10.10",
       "tolerance": 1.0
     },
     {

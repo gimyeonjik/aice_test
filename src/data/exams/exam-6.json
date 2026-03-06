@@ -5,7 +5,7 @@
   "scenario": "당신은 지자체 교통부서의 데이터 분석가입니다. 공유 자전거의 효율적인 배치와 관리를 위해, 날씨 정보(온도, 습도, 풍속 등)와 요일 정보를 바탕으로 특정 날짜의 '자전거 총 대여량(Rental_Count)'을 예측하는 AI 모델을 구축해야 합니다.",
   "dataset": {
     "filename": "bike_sharing_demand.csv",
-    "rowCount": "10,000행",
+    "rowCount": "1,000행",
     "target": "Rental_Count",
     "targetDescription": "총 대여량 (연속형 수치)",
     "taskType": "regression",
@@ -39,7 +39,7 @@
       "prompt": "전체 데이터의 개수(Observation)를 작성하시오.",
       "hint": "[데이터 분석 / 기초정보분석] 메뉴를 활용하시오.",
       "answerType": "integer",
-      "answer": "10000",
+      "answer": "1000",
       "unit": "개"
     },
     {
@@ -50,7 +50,7 @@
       "prompt": "'온도(Temperature)' 변수의 평균(Mean) 값을 확인하여 작성하시오.",
       "hint": "[데이터 분석 / 기초정보분석] 메뉴를 활용하시오.",
       "answerType": "float",
-      "answer": "14.98",
+      "answer": "15.19",
       "tolerance": 1.0
     },
     {
@@ -77,7 +77,7 @@
       "hint": "[데이터 가공] 메뉴를 활용하시오.",
       "guide": "수치형 데이터의 결측치는 '중앙값(Median)'으로 대체한다.\n대체 후 기준 변수는 덮어쓰기 하고 [가공 데이터 저장]을 클릭한다.",
       "answerType": "float",
-      "answer": "60.20",
+      "answer": "59.20",
       "tolerance": 1.0
     },
     {

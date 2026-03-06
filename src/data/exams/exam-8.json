@@ -5,7 +5,7 @@
   "scenario": "당신은 중고차 거래 플랫폼의 데이터 분석가입니다. 차량의 연식, 주행거리, 사고 이력 등 다양한 정보가 담긴 데이터를 분석하여, 해당 차량의 적정 '매매 가격(Price)'을 예측하는 AI 모델을 구축해야 합니다.",
   "dataset": {
     "filename": "used_car_price.csv",
-    "rowCount": "12,000행",
+    "rowCount": "1,000행",
     "target": "Price",
     "targetDescription": "매매 가격 (단위: 만원)",
     "taskType": "regression",
@@ -39,7 +39,7 @@
       "prompt": "전체 데이터의 개수(Observation)를 작성하시오.",
       "hint": "[데이터 분석 / 기초정보분석] 메뉴를 활용하시오.",
       "answerType": "integer",
-      "answer": "12000",
+      "answer": "1000",
       "unit": "개"
     },
     {
@@ -50,8 +50,8 @@
       "prompt": "'주행거리(Mileage)' 변수의 평균(Mean) 값을 확인하여 작성하시오.",
       "hint": "[데이터 분석 / 기초정보분석] 메뉴를 활용하시오.",
       "answerType": "float",
-      "answer": "102144.09",
-      "tolerance": 500
+      "answer": "101227.63",
+      "tolerance": 1000
     },
     {
       "type": "mcq",
@@ -77,8 +77,8 @@
       "hint": "[데이터 가공] 메뉴를 활용하시오.",
       "guide": "수치형 데이터의 결측치는 '중앙값(Median)'으로 대체한다.\n대체 후 기준 변수는 덮어쓰기 하고 [가공 데이터 저장]을 클릭한다.",
       "answerType": "float",
-      "answer": "101653.50",
-      "tolerance": 500
+      "answer": "99310.00",
+      "tolerance": 1000
     },
     {
       "type": "action",
