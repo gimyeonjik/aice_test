@@ -20,7 +20,10 @@
       "Bash(git add src/app/api/debug/env/route.ts)",
       "Bash(git commit:*)",
       "Bash(git push)",
-      "Bash(git add src/app/api/admin/auth/route.ts src/app/api/debug/env/route.ts)"
+      "Bash(git add src/app/api/admin/auth/route.ts src/app/api/debug/env/route.ts)",
+      "Bash(git add src/app/exam/[examId]/ExamForm.tsx)",
+      "Bash(git add src/data/exams/exam-4.json src/data/exams/exam-5.json src/data/exams/exam-6.json src/data/exams/exam-7.json src/data/exams/exam-8.json)",
+      "Bash(npm run build)"
     ]
   }
 }

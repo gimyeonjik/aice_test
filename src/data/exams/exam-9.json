@@ -1,0 +1,130 @@
+{
+  "id": "exam-9",
+  "examNumber": 9,
+  "title": "은행 대출 연체 예측 (이진 분류)",
+  "scenario": "당신은 K-은행의 리스크 관리팀 데이터 분석가입니다. 고객의 나이, 연소득, 대출금액, 신용점수 등의 데이터를 분석하여, 해당 고객이 대출을 갚지 못하고 '연체(Default)'할 것인지 사전에 예측하는 AI 모델을 구축해야 합니다. 이 모델은 대출 승인 여부를 결정하는 중요한 지표로 활용됩니다.",
+  "dataset": {
+    "filename": "bank_loan_default.csv",
+    "rowCount": "15,000행",
+    "target": "Default",
+    "targetDescription": "1: 연체/부실, 0: 정상 상환 (이진 분류)",
+    "taskType": "classification",
+    "features": ["Customer_ID", "Age", "Income", "Loan_Amount", "Credit_Score", "Employment_Type", "Default"],
+    "excludeColumns": ["Customer_ID"]
+  },
+  "parts": [
+    { "partNumber": 1, "title": "데이터 분석 및 전처리", "questionRange": [1, 6] },
+    { "partNumber": 2, "title": "AI 모델링 및 시뮬레이션", "questionRange": [7, 9] }
+  ],
+  "questions": [
+    {
+      "type": "mcq",
+      "id": "exam-9-q1",
+      "questionNumber": 1,
+      "partNumber": 1,
+      "prompt": "고객이 대출을 연체할지(1) 정상 상환할지(0) 예측하는 본 과제에 가장 적합한 모델링 기법을 고르시오.",
+      "options": [
+        { "label": "1)", "text": "회귀 (Regression)" },
+        { "label": "2)", "text": "분류 (Classification)" },
+        { "label": "3)", "text": "군집화 (Clustering)" },
+        { "label": "4)", "text": "시계열 예측 (Time Series)" }
+      ],
+      "answer": 2
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-9-q2",
+      "questionNumber": 2,
+      "partNumber": 1,
+      "prompt": "전체 데이터의 개수(Observation)를 작성하시오.",
+      "hint": "[데이터 분석 / 기초정보분석] 메뉴를 활용하시오.",
+      "answerType": "integer",
+      "answer": "15000",
+      "unit": "개"
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-9-q3",
+      "questionNumber": 3,
+      "partNumber": 1,
+      "prompt": "'신용점수(Credit_Score)' 변수의 평균(Mean) 값을 확인하여 작성하시오.",
+      "hint": "[데이터 분석 / 기초정보분석] 메뉴를 활용하시오.",
+      "answerType": "float",
+      "answer": "649.26",
+      "tolerance": 1.0
+    },
+    {
+      "type": "mcq",
+      "id": "exam-9-q4",
+      "questionNumber": 4,
+      "partNumber": 1,
+      "prompt": "종속변수인 연체여부(Default)와 가장 강한 '음의 상관관계(Negative Correlation)'를 가지는 변수를 고르시오. (수치가 높아질수록 대출을 잘 갚아서 연체(1)하지 않는 요인)",
+      "hint": "[데이터 분석 / 시각화 분석] 메뉴의 Heatmap을 활용하시오.",
+      "options": [
+        { "label": "1)", "text": "Age" },
+        { "label": "2)", "text": "Income" },
+        { "label": "3)", "text": "Loan_Amount" },
+        { "label": "4)", "text": "Credit_Score" }
+      ],
+      "answer": 4
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-9-q5",
+      "questionNumber": 5,
+      "partNumber": 1,
+      "prompt": "데이터의 결측치(Missing Cells)를 다음 가이드에 따라 처리한 후, 'Credit_Score' 변수의 결측치를 대체한 값을 작성하시오.",
+      "hint": "[데이터 가공] 메뉴를 활용하시오.",
+      "guide": "수치형 데이터의 결측치는 '중앙값(Median)'으로 대체한다.\n대체 후 기준 변수는 덮어쓰기 하고 [가공 데이터 저장]을 클릭한다.",
+      "answerType": "float",
+      "answer": "650.00",
+      "tolerance": 1.0
+    },
+    {
+      "type": "action",
+      "id": "exam-9-q6",
+      "questionNumber": 6,
+      "partNumber": 1,
+      "prompt": "문자열로 된 'Employment_Type' 컬럼을 AI가 이해할 수 있도록 변환하시오.",
+      "instruction": "One-Hot Encoding 또는 Label Encoding을 적용하여 숫자로 변환하시오."
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-9-q7",
+      "questionNumber": 7,
+      "partNumber": 2,
+      "prompt": "모델의 Accuracy(정확도) 값은 얼마인가?",
+      "hint": "[AI모델 학습] 메뉴를 활용하시오.",
+      "guide": "작업 데이터: 가공이 완료된 데이터\n제외 컬럼: 'Customer_ID'\n종속변수(Output): 'Default'\n알고리즘: 'Random Forest Classifier' (랜덤 포레스트 분류)\n학습/검증 비율: 80 : 20\n정답 작성: 소수점 넷째 자리까지 반올림 (예: 0.8523)",
+      "answerType": "float",
+      "answer": "0.9600",
+      "tolerance": 0.05
+    },
+    {
+      "type": "mcq",
+      "id": "exam-9-q8",
+      "questionNumber": 8,
+      "partNumber": 2,
+      "prompt": "학습된 모델 분석 결과, 대출 연체(Default)를 결정하는 데 가장 큰 영향을 미치는 변수(Feature Importance 1위)는 무엇인가?",
+      "hint": "[AI모델 활용 / 모델분석] 메뉴를 활용하시오.",
+      "options": [
+        { "label": "1)", "text": "Age" },
+        { "label": "2)", "text": "Income" },
+        { "label": "3)", "text": "Credit_Score" },
+        { "label": "4)", "text": "Employment_Type" }
+      ],
+      "answer": 3
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-9-q9",
+      "questionNumber": 9,
+      "partNumber": 2,
+      "prompt": "다음 신규 대출 신청자의 연체 여부(Default)를 예측하시오.",
+      "hint": "[AI모델 활용 / 시뮬레이션] 메뉴를 활용하시오.",
+      "inputValues": "Age: 35\nIncome: 2800 (비교적 저소득)\nLoan_Amount: 8000 (과도한 대출금)\nCredit_Score: 450 (저신용)\nEmployment_Type: Unemployed (무직)",
+      "answerType": "integer",
+      "answer": "1"
+    }
+  ]
+}

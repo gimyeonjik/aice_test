@@ -5,6 +5,7 @@ import exam5 from "@/data/exams/exam-5.json";
 import exam6 from "@/data/exams/exam-6.json";
 import exam7 from "@/data/exams/exam-7.json";
 import exam8 from "@/data/exams/exam-8.json";
+import exam9 from "@/data/exams/exam-9.json";
 
 const exams: Record<string, Exam> = {
   "exam-4": exam4 as unknown as Exam,
@@ -12,6 +13,7 @@ const exams: Record<string, Exam> = {
   "exam-6": exam6 as unknown as Exam,
   "exam-7": exam7 as unknown as Exam,
   "exam-8": exam8 as unknown as Exam,
+  "exam-9": exam9 as unknown as Exam,
 };
 
 export function getExam(examId: string): Exam | null {
