@@ -1,0 +1,132 @@
+{
+  "id": "exam-10",
+  "examNumber": 10,
+  "title": "호텔 예약 취소 예측 (이진 분류)",
+  "scenario": "당신은 K-호텔의 수익 관리(Revenue Management) 팀 데이터 분석가입니다. 최근 '노쇼(No-Show)'와 '당일 예약 취소'로 인해 빈 객실이 발생하여 손실이 커지고 있습니다. 예약 정보(리드타임, 객실 요금, 보증금 유형 등)를 분석하여, 해당 예약이 '취소(Is_Canceled=1)'될 것인지 미리 예측하는 AI 모델을 구축하십시오.",
+  "dataset": {
+    "filename": "hotel_booking_cancellation.csv",
+    "rowCount": "10,000행",
+    "target": "Is_Canceled",
+    "targetDescription": "1: 예약 취소, 0: 예약 유지 (이진 분류)",
+    "taskType": "classification",
+    "features": ["Booking_ID", "Lead_Time", "Room_Price", "Special_Requests", "Deposit_Type", "Customer_Type", "Is_Canceled"],
+    "excludeColumns": ["Booking_ID"]
+  },
+  "parts": [
+    { "partNumber": 1, "title": "데이터 분석 및 전처리", "questionRange": [1, 6] },
+    { "partNumber": 2, "title": "AI 모델링 및 시뮬레이션", "questionRange": [7, 9] }
+  ],
+  "questions": [
+    {
+      "type": "mcq",
+      "id": "exam-10-q1",
+      "questionNumber": 1,
+      "partNumber": 1,
+      "prompt": "고객이 예약을 취소할지(1), 유지할지(0)를 예측하는 본 과제에 가장 적합한 AI 모델링 기법을 고르시오.",
+      "options": [
+        { "label": "1)", "text": "회귀 (Regression)" },
+        { "label": "2)", "text": "분류 (Classification)" },
+        { "label": "3)", "text": "군집화 (Clustering)" },
+        { "label": "4)", "text": "텍스트 분석 (Text Analysis)" }
+      ],
+      "answer": 2
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-10-q2",
+      "questionNumber": 2,
+      "partNumber": 1,
+      "prompt": "전체 데이터의 개수(Observation)를 작성하시오.",
+      "hint": "[데이터 분석 / 기초정보분석] 메뉴를 활용하시오.",
+      "answerType": "integer",
+      "answer": "10000",
+      "unit": "개"
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-10-q3",
+      "questionNumber": 3,
+      "partNumber": 1,
+      "prompt": "'예약 리드타임(Lead_Time)' 변수의 평균(Mean) 값을 확인하여 작성하시오.",
+      "hint": "[데이터 분석 / 기초정보분석] 메뉴를 활용하시오.",
+      "answerType": "float",
+      "answer": "149.64",
+      "tolerance": 1.0,
+      "unit": "일"
+    },
+    {
+      "type": "mcq",
+      "id": "exam-10-q4",
+      "questionNumber": 4,
+      "partNumber": 1,
+      "prompt": "종속변수인 취소여부(Is_Canceled)와 가장 강한 '양의 상관관계(Positive Correlation)'를 가지는 변수를 고르시오.",
+      "hint": "[데이터 분석 / 시각화 분석] 메뉴의 Heatmap을 활용하시오.",
+      "options": [
+        { "label": "1)", "text": "Lead_Time" },
+        { "label": "2)", "text": "Room_Price" },
+        { "label": "3)", "text": "Special_Requests" },
+        { "label": "4)", "text": "Deposit_Type" }
+      ],
+      "answer": 1
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-10-q5",
+      "questionNumber": 5,
+      "partNumber": 1,
+      "prompt": "데이터의 결측치(Missing Cells)를 처리한 후, 'Room_Price' 변수의 결측치를 대체한 값을 작성하시오.",
+      "hint": "[데이터 가공] 메뉴를 활용하시오.",
+      "guide": "수치형 데이터의 결측치는 '중앙값(Median)'으로 대체한다.\n대체 후 기준 변수는 덮어쓰기 하고 [가공 데이터 저장]을 클릭한다.",
+      "answerType": "float",
+      "answer": "150353.5",
+      "tolerance": 500,
+      "unit": "원"
+    },
+    {
+      "type": "action",
+      "id": "exam-10-q6",
+      "questionNumber": 6,
+      "partNumber": 1,
+      "prompt": "문자열로 된 'Deposit_Type'과 'Customer_Type' 컬럼을 AI가 이해할 수 있도록 변환하시오.",
+      "instruction": "One-Hot Encoding(원-핫 인코딩)을 적용하여 숫자로 변환하시오."
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-10-q7",
+      "questionNumber": 7,
+      "partNumber": 2,
+      "prompt": "모델의 Accuracy(정확도) 값은 얼마인가?",
+      "hint": "[AI모델 학습] 메뉴를 활용하시오.",
+      "guide": "작업 데이터: 가공이 완료된 데이터\n제외 컬럼: 'Booking_ID'\n종속변수(Output): 'Is_Canceled'\n알고리즘: 'Decision Tree Classifier' (의사결정 나무 분류)\n학습/검증 비율: 80 : 20\n정답 작성: 소수점 넷째 자리까지 반올림 (예: 0.8523)",
+      "answerType": "float",
+      "answer": "0.8850",
+      "tolerance": 0.04
+    },
+    {
+      "type": "mcq",
+      "id": "exam-10-q8",
+      "questionNumber": 8,
+      "partNumber": 2,
+      "prompt": "학습된 모델 분석 결과, 예약 취소 여부(Is_Canceled)를 결정하는 데 가장 큰 영향을 미치는 변수(Feature Importance 1위)는 무엇인가?",
+      "hint": "[AI모델 활용 / 모델분석] 메뉴를 활용하시오.",
+      "options": [
+        { "label": "1)", "text": "Lead_Time" },
+        { "label": "2)", "text": "Room_Price" },
+        { "label": "3)", "text": "Special_Requests" },
+        { "label": "4)", "text": "Deposit_Type_Non_Refund (환불 불가 여부)" }
+      ],
+      "answer": 1
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-10-q9",
+      "questionNumber": 9,
+      "partNumber": 2,
+      "prompt": "다음 신규 예약자의 취소 여부(Is_Canceled)를 예측하시오. (1: 취소, 0: 예약 유지)",
+      "hint": "[AI모델 활용 / 시뮬레이션] 메뉴를 활용하시오.",
+      "inputValues": "Lead_Time: 200 (약 6개월 전 미리 예약)\nRoom_Price: 350000 (고가 객실)\nSpecial_Requests: 0 (특별 요청 없음)\nDeposit_Type: No_Deposit (보증금 없음)\nCustomer_Type: Group (단체 고객)",
+      "answerType": "integer",
+      "answer": "1"
+    }
+  ]
+}

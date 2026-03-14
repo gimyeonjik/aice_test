@@ -1,19 +1,27 @@
 import type { Exam, ExamForClient, Question } from "@/types/exam";
 
+import exam1 from "@/data/exams/exam-1.json";
+import exam2 from "@/data/exams/exam-2.json";
+import exam3 from "@/data/exams/exam-3.json";
 import exam4 from "@/data/exams/exam-4.json";
 import exam5 from "@/data/exams/exam-5.json";
 import exam6 from "@/data/exams/exam-6.json";
 import exam7 from "@/data/exams/exam-7.json";
 import exam8 from "@/data/exams/exam-8.json";
 import exam9 from "@/data/exams/exam-9.json";
+import exam10 from "@/data/exams/exam-10.json";
 
 const exams: Record<string, Exam> = {
+  "exam-1": exam1 as unknown as Exam,
+  "exam-2": exam2 as unknown as Exam,
+  "exam-3": exam3 as unknown as Exam,
   "exam-4": exam4 as unknown as Exam,
   "exam-5": exam5 as unknown as Exam,
   "exam-6": exam6 as unknown as Exam,
   "exam-7": exam7 as unknown as Exam,
   "exam-8": exam8 as unknown as Exam,
   "exam-9": exam9 as unknown as Exam,
+  "exam-10": exam10 as unknown as Exam,
 };
 
 export function getExam(examId: string): Exam | null {

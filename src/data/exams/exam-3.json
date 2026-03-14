@@ -1,0 +1,133 @@
+{
+  "id": "exam-3",
+  "examNumber": 3,
+  "title": "스마트 팩토리 제품 불량 예측 (이진 분류 심화)",
+  "scenario": "당신은 K-전자의 스마트 팩토리 품질 관리자입니다. 최근 생산량이 급증하여 총 10,000건의 센서 데이터가 수집되었습니다. 이 대규모 데이터를 분석하여 불량(1)과 정상(0)을 구분하는 고성능 AI 모델을 개발하십시오.",
+  "dataset": {
+    "filename": "smart_factory_defect.csv",
+    "rowCount": "10,000행",
+    "target": "Defect_Status",
+    "targetDescription": "1: 불량, 0: 정상 (이진 분류)",
+    "taskType": "classification",
+    "features": ["Product_ID", "Temperature", "Vibration", "Operation_Time", "Material_Type", "Maintenance_Flag", "Defect_Status"],
+    "excludeColumns": ["Product_ID"]
+  },
+  "parts": [
+    { "partNumber": 1, "title": "데이터 분석 및 전처리", "questionRange": [1, 5] },
+    { "partNumber": 2, "title": "AI 모델링 및 시뮬레이션", "questionRange": [6, 9] }
+  ],
+  "questions": [
+    {
+      "type": "mcq",
+      "id": "exam-3-q1",
+      "questionNumber": 1,
+      "partNumber": 1,
+      "prompt": "본 과제에서 예측해야 할 종속변수(Output)를 고르시오.",
+      "options": [
+        { "label": "1)", "text": "Temperature" },
+        { "label": "2)", "text": "Vibration" },
+        { "label": "3)", "text": "Operation_Time" },
+        { "label": "4)", "text": "Defect_Status" }
+      ],
+      "answer": 4
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-3-q2",
+      "questionNumber": 2,
+      "partNumber": 1,
+      "prompt": "전체 데이터의 개수(Observation)를 작성하시오.",
+      "hint": "[데이터 분석 / 기초정보분석] 메뉴를 활용하시오.",
+      "answerType": "integer",
+      "answer": "10000",
+      "unit": "개"
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-3-q3",
+      "questionNumber": 3,
+      "partNumber": 1,
+      "prompt": "'진동(Vibration)' 변수의 평균(Mean) 값을 확인하여 작성하시오.",
+      "hint": "[데이터 분석 / 기초정보분석] 메뉴를 활용하시오.",
+      "answerType": "float",
+      "answer": "100.34",
+      "tolerance": 1.0
+    },
+    {
+      "type": "mcq",
+      "id": "exam-3-q4",
+      "questionNumber": 4,
+      "partNumber": 1,
+      "prompt": "불량여부(Defect_Status)와 가장 강한 양의 상관관계(Positive Correlation)를 보이는 변수를 고르시오.",
+      "hint": "[데이터 분석 / 시각화 분석] 메뉴의 Heatmap을 활용하시오.",
+      "options": [
+        { "label": "1)", "text": "Temperature" },
+        { "label": "2)", "text": "Vibration" },
+        { "label": "3)", "text": "Operation_Time" },
+        { "label": "4)", "text": "Maintenance_Flag" }
+      ],
+      "answer": 1
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-3-q5",
+      "questionNumber": 5,
+      "partNumber": 1,
+      "prompt": "'Temperature' 변수의 결측치를 '중앙값(Median)'으로 대체하시오. 대체에 사용된 중앙값은 얼마인가?",
+      "hint": "[데이터 가공] 메뉴를 활용하시오.",
+      "guide": "수치형 데이터(Temperature)의 결측치는 '중앙값'으로 대체\n범주형 데이터의 결측치는 '최빈값'으로 대체\n처리 후 [가공 데이터 저장] 필수",
+      "answerType": "float",
+      "answer": "59.95",
+      "tolerance": 1.0
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-3-q6",
+      "questionNumber": 6,
+      "partNumber": 2,
+      "prompt": "다음 가이드에 따라 AI 모델을 학습시키고, 정확도(Accuracy)를 작성하시오.",
+      "hint": "[AI모델 학습] 메뉴를 활용하시오.",
+      "guide": "작업 데이터: 문항 5에서 저장한 데이터\n제외 컬럼: 'Product_ID'\n종속변수: 'Defect_Status'\n알고리즘: 'Decision Tree'\n학습/검증 비율: 80 : 20\n정답 작성: 소수점 넷째 자리까지 반올림 (예: 0.1234)",
+      "answerType": "float",
+      "answer": "0.9625",
+      "tolerance": 0.02
+    },
+    {
+      "type": "mcq",
+      "id": "exam-3-q7",
+      "questionNumber": 7,
+      "partNumber": 2,
+      "prompt": "학습된 모델 분석 결과, 불량 여부를 판별하는 데 가장 중요한 변수(Feature Importance 1위)는 무엇인가?",
+      "hint": "[AI모델 활용 / 모델분석] 메뉴를 활용하시오.",
+      "options": [
+        { "label": "1)", "text": "Temperature" },
+        { "label": "2)", "text": "Vibration" },
+        { "label": "3)", "text": "Operation_Time" },
+        { "label": "4)", "text": "Maintenance_Flag" }
+      ],
+      "answer": 1
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-3-q8",
+      "questionNumber": 8,
+      "partNumber": 2,
+      "prompt": "다음 신규 제품의 불량 여부를 예측하시오. (0: 정상, 1: 불량)",
+      "hint": "[AI모델 활용 / 시뮬레이션] 메뉴를 활용하시오.",
+      "inputValues": "Temperature: 90.5\nVibration: 145.0\nOperation_Time: 35.0\nMaterial_Type: Type_A\nMaintenance_Flag: No",
+      "answerType": "integer",
+      "answer": "1"
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-3-q9",
+      "questionNumber": 9,
+      "partNumber": 2,
+      "prompt": "다음 신규 제품의 불량 여부를 예측하시오. (0: 정상, 1: 불량)",
+      "hint": "[AI모델 활용 / 시뮬레이션] 메뉴를 활용하시오.",
+      "inputValues": "Temperature: 45.0\nVibration: 80.0\nOperation_Time: 5.0\nMaterial_Type: Type_C\nMaintenance_Flag: Yes",
+      "answerType": "integer",
+      "answer": "0"
+    }
+  ]
+}

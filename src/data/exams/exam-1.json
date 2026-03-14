@@ -1,0 +1,133 @@
+{
+  "id": "exam-1",
+  "examNumber": 1,
+  "title": "헬스장 회원 이탈 예측 (이진 분류)",
+  "scenario": "당신은 A 헬스장의 데이터 분석가입니다. 최근 회원 이탈이 늘어나, 회원 데이터를 분석해 이탈 가능성이 높은 회원을 예측하는 AI 모델을 만들고자 합니다. 2,000명의 대규모 데이터를 활용하며, AIDU ez 도구를 사용하여 분석을 수행합니다.",
+  "dataset": {
+    "filename": "gym_member_churn_large.csv",
+    "rowCount": "2,000행",
+    "target": "Churn",
+    "targetDescription": "1: 이탈, 0: 유지 (이진 분류)",
+    "taskType": "classification",
+    "features": ["Member_ID", "Gender", "Age", "Weight_kg", "Membership_Type", "Weekly_Visits", "Session_Duration_mins", "Churn"],
+    "excludeColumns": ["Member_ID"]
+  },
+  "parts": [
+    { "partNumber": 1, "title": "데이터 분석 및 전처리", "questionRange": [1, 7] },
+    { "partNumber": 2, "title": "모델 평가 및 시뮬레이션", "questionRange": [8, 10] }
+  ],
+  "questions": [
+    {
+      "type": "mcq",
+      "id": "exam-1-q1",
+      "questionNumber": 1,
+      "partNumber": 1,
+      "prompt": "gym_member_churn_large.csv 파일을 불러온 후, Gender와 Membership_Type 컬럼의 데이터 타입은 무엇인지 확인하시오.",
+      "options": [
+        { "label": "1)", "text": "Number" },
+        { "label": "2)", "text": "String" },
+        { "label": "3)", "text": "Date" },
+        { "label": "4)", "text": "Boolean" }
+      ],
+      "answer": 2
+    },
+    {
+      "type": "mcq",
+      "id": "exam-1-q2",
+      "questionNumber": 2,
+      "partNumber": 1,
+      "prompt": "Member_ID를 제외하고, 데이터에 결측치(Null)가 존재하는 컬럼은 총 몇 개입니까?",
+      "options": [
+        { "label": "1)", "text": "0개" },
+        { "label": "2)", "text": "1개" },
+        { "label": "3)", "text": "2개" },
+        { "label": "4)", "text": "3개" }
+      ],
+      "answer": 3
+    },
+    {
+      "type": "mcq",
+      "id": "exam-1-q3",
+      "questionNumber": 3,
+      "partNumber": 1,
+      "prompt": "Churn(이탈 여부) 컬럼과 가장 높은 상관관계(절댓값 기준)를 보이는 변수는 무엇입니까? (단, Member_ID 제외)",
+      "hint": "[데이터 분석 / 시각화 분석] 메뉴의 Heatmap을 활용하시오.",
+      "options": [
+        { "label": "1)", "text": "Age" },
+        { "label": "2)", "text": "Weight_kg" },
+        { "label": "3)", "text": "Weekly_Visits" },
+        { "label": "4)", "text": "Membership_Type" }
+      ],
+      "answer": 3
+    },
+    {
+      "type": "action",
+      "id": "exam-1-q4",
+      "questionNumber": 4,
+      "partNumber": 1,
+      "prompt": "Weight_kg와 Session_Duration_mins 컬럼의 결측치를 처리하시오.",
+      "instruction": "두 컬럼의 결측치를 '평균값(Mean)'으로 대체하시오."
+    },
+    {
+      "type": "action",
+      "id": "exam-1-q5",
+      "questionNumber": 5,
+      "partNumber": 1,
+      "prompt": "AI 모델 학습을 위해 문자열 데이터를 수치형으로 변환하시오.",
+      "instruction": "Gender와 Membership_Type 컬럼에 Label Encoding을 적용하시오."
+    },
+    {
+      "type": "action",
+      "id": "exam-1-q6",
+      "questionNumber": 6,
+      "partNumber": 1,
+      "prompt": "데이터를 학습용(Train)과 검증용(Test)으로 분리하시오.",
+      "instruction": "학습 데이터 비율: 80% (8:2). Random Seed나 Stratify 설정 옵션이 없는 경우, 비율만 80%로 맞추고 진행하시오."
+    },
+    {
+      "type": "action",
+      "id": "exam-1-q7",
+      "questionNumber": 7,
+      "partNumber": 1,
+      "prompt": "다음 조건에 맞춰 AI 모델을 학습시키시오.",
+      "instruction": "알고리즘: Decision Tree (의사결정나무)\nTarget: Churn\nFeatures: Member_ID를 제외한 전체 컬럼 선택"
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-1-q8",
+      "questionNumber": 8,
+      "partNumber": 2,
+      "prompt": "K-Fold 교차 검증(K=5)을 수행했을 때, 평균 정확도(Average Accuracy)는 얼마입니까? (소수점 둘째 자리까지 확인)",
+      "hint": "모델의 일반화 성능을 확인하기 위해 K-Fold 교차 검증을 수행하시오.",
+      "answerType": "float",
+      "answer": "0.90",
+      "tolerance": 0.02
+    },
+    {
+      "type": "mcq",
+      "id": "exam-1-q9",
+      "questionNumber": 9,
+      "partNumber": 2,
+      "prompt": "이탈 여부(Churn) 예측에 가장 큰 영향을 미친 Top 1 변수(Feature Importance 1위)는 무엇입니까?",
+      "hint": "[AI모델 활용 / 모델분석] 메뉴를 활용하시오.",
+      "options": [
+        { "label": "1)", "text": "Age" },
+        { "label": "2)", "text": "Weight_kg" },
+        { "label": "3)", "text": "Weekly_Visits" },
+        { "label": "4)", "text": "Session_Duration_mins" }
+      ],
+      "answer": 3
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-1-q10",
+      "questionNumber": 10,
+      "partNumber": 2,
+      "prompt": "다음 조건에 해당하는 회원의 이탈 여부를 예측하시오. (Churn: 1=이탈, 0=유지)",
+      "hint": "[AI모델 활용 / 시뮬레이션] 메뉴를 활용하시오.",
+      "inputValues": "Age: 42\nGender: Female\nMembership_Type: Standard\nSession_Duration_mins: 35\nWeekly_Visits: 1\nWeight_kg: 62.5",
+      "answerType": "integer",
+      "answer": "1"
+    }
+  ]
+}

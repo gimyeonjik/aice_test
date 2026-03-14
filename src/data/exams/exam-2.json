@@ -1,0 +1,151 @@
+{
+  "id": "exam-2",
+  "examNumber": 2,
+  "title": "직원 퇴사 예측 (이진 분류)",
+  "scenario": "당신은 D 기업의 인사팀 데이터 분석가입니다. 핵심 인재들의 이탈을 막기 위해, 어떤 직원이 퇴사할 확률이 높은지 분석하고 예측하는 AI 모델을 구축하려 합니다.",
+  "dataset": {
+    "filename": "employee_attrition_v2.csv",
+    "rowCount": "2,000행",
+    "target": "Attrition",
+    "targetDescription": "1: 퇴사, 0: 재직 (이진 분류)",
+    "taskType": "classification",
+    "features": ["Employee_ID", "Age", "Distance_From_Home", "Monthly_Income", "Job_Satisfaction", "Stock_Option_Level", "Department", "Overtime", "Attrition"],
+    "excludeColumns": ["Employee_ID"]
+  },
+  "parts": [
+    { "partNumber": 1, "title": "데이터 분석 및 전처리", "questionRange": [1, 8] },
+    { "partNumber": 2, "title": "모델 평가 및 시뮬레이션", "questionRange": [9, 12] }
+  ],
+  "questions": [
+    {
+      "type": "mcq",
+      "id": "exam-2-q1",
+      "questionNumber": 1,
+      "partNumber": 1,
+      "prompt": "데이터를 불러온 뒤, Overtime 컬럼과 Job_Satisfaction 컬럼의 데이터 타입을 확인하시오.",
+      "options": [
+        { "label": "1)", "text": "Number, Number" },
+        { "label": "2)", "text": "String, String" },
+        { "label": "3)", "text": "String, Number" },
+        { "label": "4)", "text": "Number, String" }
+      ],
+      "answer": 3
+    },
+    {
+      "type": "mcq",
+      "id": "exam-2-q2",
+      "questionNumber": 2,
+      "partNumber": 1,
+      "prompt": "'데이터 시각화 > Box Plot' 메뉴를 활용하여 Monthly_Income(월급) 컬럼의 데이터 분포를 확인하시오.\n박스 플롯 상단에 점(Point)으로 표시되는 '이상치(Outlier)'들이 존재합니까?",
+      "options": [
+        { "label": "1)", "text": "예 (존재한다)" },
+        { "label": "2)", "text": "아니오 (존재하지 않는다)" }
+      ],
+      "answer": 1
+    },
+    {
+      "type": "mcq",
+      "id": "exam-2-q3",
+      "questionNumber": 3,
+      "partNumber": 1,
+      "prompt": "전처리(인코딩) 전 단계에서, Attrition(퇴사 여부) 컬럼과 가장 강한 양의 상관관계(Positive)와 가장 강한 음의 상관관계(Negative)를 보이는 변수를 각각 찾으시오. (단, Employee_ID 제외)",
+      "hint": "[데이터 분석 / 시각화 분석] 메뉴의 Heatmap을 활용하시오.",
+      "options": [
+        { "label": "1)", "text": "양: Age / 음: Monthly_Income" },
+        { "label": "2)", "text": "양: Distance_From_Home / 음: Job_Satisfaction" },
+        { "label": "3)", "text": "양: Stock_Option_Level / 음: Age" },
+        { "label": "4)", "text": "양: Monthly_Income / 음: Distance_From_Home" }
+      ],
+      "answer": 2
+    },
+    {
+      "type": "action",
+      "id": "exam-2-q4",
+      "questionNumber": 4,
+      "partNumber": 1,
+      "prompt": "데이터에 결측치가 존재하는 Distance_From_Home과 Job_Satisfaction 컬럼을 처리하시오.",
+      "instruction": "두 컬럼의 결측치를 '중앙값(Median)'으로 대체하시오."
+    },
+    {
+      "type": "action",
+      "id": "exam-2-q5",
+      "questionNumber": 5,
+      "partNumber": 1,
+      "prompt": "문자열로 된 Department와 Overtime 컬럼을 AI가 이해할 수 있도록 변환하시오.",
+      "instruction": "Label Encoding을 적용하시오."
+    },
+    {
+      "type": "mcq",
+      "id": "exam-2-q6",
+      "questionNumber": 6,
+      "partNumber": 1,
+      "prompt": "Label Encoding이 완료되어 모든 변수가 숫자로 변환되었습니다. 다시 상관관계 분석을 수행하시오.\nAttrition과 가장 높은 '양의 상관관계'(Positive Correlation)를 보이는 변수는 무엇입니까?",
+      "options": [
+        { "label": "1)", "text": "Job_Satisfaction" },
+        { "label": "2)", "text": "Overtime (야근)" },
+        { "label": "3)", "text": "Age" },
+        { "label": "4)", "text": "Monthly_Income" }
+      ],
+      "answer": 2
+    },
+    {
+      "type": "action",
+      "id": "exam-2-q7",
+      "questionNumber": 7,
+      "partNumber": 1,
+      "prompt": "데이터를 학습용과 평가용으로 분리하시오.",
+      "instruction": "학습 데이터 비율: 80% (8:2)"
+    },
+    {
+      "type": "action",
+      "id": "exam-2-q8",
+      "questionNumber": 8,
+      "partNumber": 1,
+      "prompt": "다음 조건으로 모델을 학습시키시오.",
+      "instruction": "알고리즘: Decision Tree\nTarget: Attrition\nFeatures: Employee_ID를 제외한 모든 변수"
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-2-q9",
+      "questionNumber": 9,
+      "partNumber": 2,
+      "prompt": "K-Fold 교차 검증(K=5)을 수행했을 때, 산출된 평균 정확도(Mean Accuracy)를 소수점 넷째 자리까지 적으시오.",
+      "answerType": "float",
+      "answer": "0.8206",
+      "tolerance": 0.02
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-2-q10",
+      "questionNumber": 10,
+      "partNumber": 2,
+      "prompt": "다음 조건을 가진 직원의 퇴사 여부를 예측하시오. (1: 퇴사, 0: 재직)",
+      "hint": "[AI모델 활용 / 시뮬레이션] 메뉴를 활용하시오.",
+      "inputValues": "Age: 29\nDepartment: Sales\nDistance_From_Home: 15\nMonthly_Income: 3000\nOvertime: Yes\nJob_Satisfaction: 1\nStock_Option_Level: 0",
+      "answerType": "integer",
+      "answer": "1"
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-2-q11",
+      "questionNumber": 11,
+      "partNumber": 2,
+      "prompt": "다음 조건을 가진 직원의 퇴사 여부를 예측하시오. (1: 퇴사, 0: 재직)",
+      "hint": "[AI모델 활용 / 시뮬레이션] 메뉴를 활용하시오.",
+      "inputValues": "Age: 30\nOvertime: Yes\nJob_Satisfaction: 2 (Low)\nMonthly_Income: 4500\nStock_Option_Level: 0\nDistance_From_Home: 28",
+      "answerType": "integer",
+      "answer": "0"
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-2-q12",
+      "questionNumber": 12,
+      "partNumber": 2,
+      "prompt": "다음 조건을 가진 직원의 퇴사 여부를 예측하시오. (1: 퇴사, 0: 재직)",
+      "hint": "[AI모델 활용 / 시뮬레이션] 메뉴를 활용하시오.",
+      "inputValues": "Age: 45\nOvertime: No\nJob_Satisfaction: 4 (Very High)\nMonthly_Income: 15000\nStock_Option_Level: 3\nDistance_From_Home: 2",
+      "answerType": "integer",
+      "answer": "0"
+    }
+  ]
+}

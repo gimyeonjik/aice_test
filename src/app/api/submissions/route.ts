@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!examId || !/^exam-[4-8]$/.test(examId)) {
+    if (!examId || !/^exam-\d{1,2}$/.test(examId)) {
       return NextResponse.json(
         { error: "유효하지 않은 시험입니다." },
         { status: 400 }
