@@ -4,15 +4,16 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import type { ExamForClient } from "@/types/exam";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  FileText, 
-  Database, 
-  CheckCircle2, 
-  HelpCircle, 
+import {
+  FileText,
+  Database,
+  CheckCircle2,
+  HelpCircle,
   Send,
   Info,
   Lightbulb,
-  AlertCircle
+  AlertCircle,
+  Download
 } from "lucide-react";
 
 interface Props {
@@ -168,7 +169,17 @@ export default function ExamForm({ exam, studentName }: Props) {
                   </li>
                   <li className="flex items-center justify-between">
                     <span className="text-slate-500">데이터 수</span>
-                    <span>{exam.dataset.rowCount.toLocaleString()} rows</span>
+                    <span>{exam.dataset.rowCount}</span>
+                  </li>
+                  <li className="mt-2">
+                    <a
+                      href={`/datasets/${exam.dataset.filename}`}
+                      download
+                      className="inline-flex items-center gap-2 w-full px-3 py-2 bg-indigo-600 text-white text-xs font-bold rounded-lg hover:bg-indigo-700 transition-colors shadow-sm shadow-indigo-500/20"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                      데이터셋 다운로드
+                    </a>
                   </li>
                   <li className="flex flex-col gap-1 mt-2">
                     <span className="text-slate-500 text-xs">Target 변수</span>
