@@ -1,0 +1,144 @@
+{
+  "id": "exam-11",
+  "examNumber": 11,
+  "title": "피트니스 센터 회원 세분화 (비지도 학습/군집화)",
+  "scenario": "당신은 K-피트니스 센터의 데이터 분석가입니다. 회원들의 운동 습관을 분석하여 맞춤형 PT 프로모션을 진행하고자 합니다. 회원들의 '월 방문 횟수(Visit_Frequency)'와 '1회 평균 운동 시간(Duration_Minutes)' 데이터를 활용하여, 비슷한 운동 패턴을 가진 회원들끼리 그룹(Cluster)으로 묶는 AI 모델을 구축하십시오.",
+  "dataset": {
+    "filename": "fitness_center_members.csv",
+    "rowCount": "15,000행",
+    "target": null,
+    "targetDescription": "없음 (정답이 없는 비지도 학습 과제)",
+    "taskType": "clustering",
+    "features": ["Member_ID", "Gender", "Age", "Locker_Rental", "Visit_Frequency", "Duration_Minutes"],
+    "excludeColumns": ["Member_ID"]
+  },
+  "parts": [
+    { "partNumber": 1, "title": "데이터 분석 및 전처리", "questionRange": [1, 6] },
+    { "partNumber": 2, "title": "AI 모델링 및 시뮬레이션", "questionRange": [7, 10] }
+  ],
+  "questions": [
+    {
+      "type": "mcq",
+      "id": "exam-11-q1",
+      "questionNumber": 1,
+      "partNumber": 1,
+      "prompt": "본 과제와 같이 예측해야 할 정답(Target) 변수가 주어지지 않은 상태에서, 데이터의 고유한 특성만으로 비슷한 그룹을 묶어내는 학습 방식을 무엇이라고 하는가?",
+      "options": [
+        { "label": "1)", "text": "지도 학습 (Supervised Learning)" },
+        { "label": "2)", "text": "비지도 학습 (Unsupervised Learning)" },
+        { "label": "3)", "text": "강화 학습 (Reinforcement Learning)" },
+        { "label": "4)", "text": "전이 학습 (Transfer Learning)" }
+      ],
+      "answer": 2
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-11-q2",
+      "questionNumber": 2,
+      "partNumber": 1,
+      "prompt": "전체 데이터의 개수(Observation)를 작성하시오.",
+      "hint": "[데이터 분석 / 기초정보분석] 메뉴를 활용하시오.",
+      "answerType": "integer",
+      "answer": "15000",
+      "unit": "개"
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-11-q3",
+      "questionNumber": 3,
+      "partNumber": 1,
+      "prompt": "'월 방문 횟수(Visit_Frequency)' 변수의 평균(Mean) 값을 확인하여 작성하시오.",
+      "hint": "[데이터 분석 / 기초정보분석] 메뉴를 활용하시오.",
+      "answerType": "float",
+      "answer": "14.03",
+      "tolerance": 1.0,
+      "unit": "회"
+    },
+    {
+      "type": "mcq",
+      "id": "exam-11-q4",
+      "questionNumber": 4,
+      "partNumber": 1,
+      "prompt": "'월 방문 횟수(Visit_Frequency)'를 X축으로, '1회 평균 운동 시간(Duration_Minutes)'을 Y축으로 설정하여 산점도(Scatter Plot)를 그리시오. 산점도 상에서 데이터는 크게 몇 개의 덩어리(그룹)로 나뉘어 보이는지 고르시오.",
+      "hint": "[데이터 분석 / 시각화 분석] 메뉴를 활용하시오.",
+      "options": [
+        { "label": "1)", "text": "2개" },
+        { "label": "2)", "text": "3개" },
+        { "label": "3)", "text": "4개" },
+        { "label": "4)", "text": "6개 이상" }
+      ],
+      "answer": 3
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-11-q5",
+      "questionNumber": 5,
+      "partNumber": 1,
+      "prompt": "데이터의 결측치(Missing Cells)를 다음 가이드에 따라 처리한 후, 'Duration_Minutes' 변수의 결측치를 대체한 값을 작성하시오.",
+      "hint": "[데이터 가공] 메뉴를 활용하시오.",
+      "guide": "수치형 데이터의 결측치는 '중앙값(Median)'으로 대체한다.\n대체 후 기준 변수는 덮어쓰기 하고 [가공 데이터 저장]을 클릭한다.",
+      "answerType": "float",
+      "answer": "66.1",
+      "tolerance": 1.0,
+      "unit": "분"
+    },
+    {
+      "type": "action",
+      "id": "exam-11-q6",
+      "questionNumber": 6,
+      "partNumber": 1,
+      "prompt": "문자열로 된 'Gender'와 'Locker_Rental' 컬럼을 숫자로 변환하시오.",
+      "instruction": "Label Encoding(레이블 인코딩)을 적용하시오."
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-11-q7",
+      "questionNumber": 7,
+      "partNumber": 2,
+      "prompt": "다음 가이드에 따라 군집화 AI 모델을 학습시키시오.\nK-Means 알고리즘 설정 시, 클러스터 수(K)는 몇 개로 설정해야 하는가?",
+      "hint": "[AI모델 학습] 메뉴를 활용하시오.",
+      "guide": "작업 데이터: 가공이 완료된 데이터\n제외 컬럼: 'Member_ID'\n알고리즘: 'K-Means'\n클러스터 수(n_clusters): 문항 4번의 시각화 결과에서 확인한 그룹의 개수 입력",
+      "answerType": "integer",
+      "answer": "4",
+      "unit": "개"
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-11-q8",
+      "questionNumber": 8,
+      "partNumber": 2,
+      "prompt": "학습된 모델 분석 결과, '월 방문 횟수도 가장 높고, 1회 운동 시간도 가장 긴(이른바 헬스매니아)' 그룹은 몇 번 군집(Cluster)인지 기재하시오.",
+      "hint": "[AI모델 활용 / 모델분석] 메뉴를 활용하여, 각 군집별 Visit_Frequency와 Duration_Minutes의 평균을 확인하시오.",
+      "answerType": "integer",
+      "answer": "0",
+      "tolerance": 3,
+      "unit": "번 군집"
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-11-q9",
+      "questionNumber": 9,
+      "partNumber": 2,
+      "prompt": "[AI모델 활용 / 시뮬레이션] 다음 신규 회원은 몇 번 군집으로 배정될지 예측하시오.",
+      "hint": "Gender: Male, Age: 30, Locker_Rental: Yes, Visit_Frequency: 26 (주 6회 방문), Duration_Minutes: 130.5 (2시간 이상 운동)",
+      "inputValues": "Gender: Male (또는 인코딩된 숫자)\nAge: 30\nLocker_Rental: Yes (또는 인코딩된 숫자)\nVisit_Frequency: 26\nDuration_Minutes: 130.5",
+      "answerType": "integer",
+      "answer": "0",
+      "tolerance": 3,
+      "unit": "번 군집"
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-11-q10",
+      "questionNumber": 10,
+      "partNumber": 2,
+      "prompt": "[AI모델 활용 / 시뮬레이션] 다음 신규 회원은 몇 번 군집으로 배정될지 예측하시오.",
+      "hint": "Gender: Female, Age: 25, Locker_Rental: No, Visit_Frequency: 5 (월 5회 이하 방문), Duration_Minutes: 140.0 (한 번 오면 2시간 이상 운동)",
+      "inputValues": "Gender: Female (또는 인코딩된 숫자)\nAge: 25\nLocker_Rental: No (또는 인코딩된 숫자)\nVisit_Frequency: 5\nDuration_Minutes: 140.0",
+      "answerType": "integer",
+      "answer": "0",
+      "tolerance": 3,
+      "unit": "번 군집"
+    }
+  ]
+}

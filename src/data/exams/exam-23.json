@@ -1,0 +1,222 @@
+{
+  "id": "exam-23",
+  "examNumber": 23,
+  "title": "제조 공정 불량 예측 (이진 분류)",
+  "scenario": "당신은 H-전자 스마트 팩토리팀의 데이터 분석가입니다. 제품 생산 시 온도, 압력, 생산 속도, 원자재 품질 점수, 기계 유형 등의 공정 데이터를 분석하여, 해당 제품이 '불량(Defect)'으로 생산될 것인지 사전에 예측하는 AI 모델을 구축해야 합니다. 이 모델은 불량 제품이 출하되기 전에 공정을 조절하여 불량률을 낮추는 데 활용됩니다.",
+  "dataset": {
+    "filename": "factory_defect.csv",
+    "rowCount": "13,000행",
+    "target": "Defect",
+    "targetDescription": "1: 불량, 0: 정상 (이진 분류)",
+    "taskType": "classification",
+    "features": ["Product_ID", "Temperature", "Pressure", "Production_Speed", "Material_Score", "Machine_Type", "Defect"],
+    "excludeColumns": ["Product_ID"]
+  },
+  "parts": [
+    { "partNumber": 1, "title": "AI 기본 개념", "questionRange": [1, 4] },
+    { "partNumber": 2, "title": "데이터 분석 및 전처리", "questionRange": [5, 10] },
+    { "partNumber": 3, "title": "AI 모델링 및 평가", "questionRange": [11, 12] },
+    { "partNumber": 4, "title": "시뮬레이션", "questionRange": [13, 15] }
+  ],
+  "questions": [
+    {
+      "type": "mcq",
+      "id": "exam-23-q1",
+      "questionNumber": 1,
+      "partNumber": 1,
+      "prompt": "다음 중 머신러닝의 '학습 유형'과 그 예시가 올바르게 연결된 것을 고르시오.",
+      "options": [
+        { "label": "1)", "text": "지도학습 - 비슷한 고객끼리 그룹을 나누는 작업" },
+        { "label": "2)", "text": "비지도학습 - 사진 속 동물이 고양이인지 강아지인지 분류" },
+        { "label": "3)", "text": "지도학습 - 불량품(1)과 정상품(0)을 예측하는 분류 모델" },
+        { "label": "4)", "text": "비지도학습 - 집값을 예측하는 회귀 모델" }
+      ],
+      "answer": 3
+    },
+    {
+      "type": "mcq",
+      "id": "exam-23-q2",
+      "questionNumber": 2,
+      "partNumber": 1,
+      "prompt": "제품이 불량(1)인지 정상(0)인지 예측하는 본 과제에 가장 적합한 분석 유형은 무엇인가?",
+      "options": [
+        { "label": "1)", "text": "회귀 (Regression) - 연속적인 숫자 값을 예측" },
+        { "label": "2)", "text": "분류 (Classification) - 범주형 결과를 예측" },
+        { "label": "3)", "text": "군집화 (Clustering) - 유사한 데이터를 그룹핑" },
+        { "label": "4)", "text": "시계열 예측 (Time Series) - 시간 흐름에 따른 값 예측" }
+      ],
+      "answer": 2
+    },
+    {
+      "type": "mcq",
+      "id": "exam-23-q3",
+      "questionNumber": 3,
+      "partNumber": 1,
+      "prompt": "머신러닝에서 'Feature(특성)'와 'Target(목표변수)'에 대한 설명으로 올바른 것을 고르시오.",
+      "options": [
+        { "label": "1)", "text": "Feature는 예측하고 싶은 결과이고, Target은 예측에 사용하는 입력 데이터이다" },
+        { "label": "2)", "text": "Feature는 예측에 사용하는 입력 변수이고, Target은 예측하고 싶은 결과 변수이다" },
+        { "label": "3)", "text": "Feature와 Target은 같은 의미로 사용된다" },
+        { "label": "4)", "text": "Target은 반드시 숫자형이어야 하고, Feature는 반드시 문자형이어야 한다" }
+      ],
+      "answer": 2
+    },
+    {
+      "type": "mcq",
+      "id": "exam-23-q4",
+      "questionNumber": 4,
+      "partNumber": 1,
+      "prompt": "다음 중 범주형(Categorical) 데이터에 해당하는 것을 고르시오.",
+      "options": [
+        { "label": "1)", "text": "Temperature (공정 온도 - 185.3, 192.1, ...)" },
+        { "label": "2)", "text": "Pressure (압력 - 48.5, 55.2, ...)" },
+        { "label": "3)", "text": "Machine_Type (기계 유형 - Type_A, Type_B, Type_C)" },
+        { "label": "4)", "text": "Material_Score (원자재 점수 - 72.0, 85.5, ...)" }
+      ],
+      "answer": 3
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-23-q5",
+      "questionNumber": 5,
+      "partNumber": 2,
+      "prompt": "전체 데이터의 개수(Observation)를 작성하시오.",
+      "hint": "[데이터 분석 / 기초정보분석] 메뉴를 활용하시오.",
+      "answerType": "integer",
+      "answer": "13000",
+      "unit": "개"
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-23-q6",
+      "questionNumber": 6,
+      "partNumber": 2,
+      "prompt": "'원자재 품질 점수(Material_Score)' 변수의 평균(Mean) 값을 확인하여 작성하시오.",
+      "hint": "[데이터 분석 / 기초정보분석] 메뉴를 활용하시오.",
+      "answerType": "float",
+      "answer": "74.82",
+      "tolerance": 1.0
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-23-q7",
+      "questionNumber": 7,
+      "partNumber": 2,
+      "prompt": "결측치(Missing Value)가 존재하는 변수명과 결측치 개수를 작성하시오.",
+      "hint": "[데이터 분석 / 기초정보분석] 메뉴를 활용하시오.",
+      "answerType": "text",
+      "answer": "Material_Score",
+      "subFields": [
+        { "label": "결측치가 있는 변수", "answerType": "text", "answer": "Material_Score" },
+        { "label": "결측치 개수", "answerType": "integer", "answer": "250", "unit": "개" }
+      ]
+    },
+    {
+      "type": "mcq",
+      "id": "exam-23-q8",
+      "questionNumber": 8,
+      "partNumber": 2,
+      "prompt": "종속변수인 불량여부(Defect)와 가장 강한 '음의 상관관계(Negative Correlation)'를 가지는 변수를 고르시오. (수치가 높을수록 불량이 발생하지 않는 요인)",
+      "hint": "[데이터 분석 / 시각화 분석] 메뉴의 Heatmap을 활용하시오.",
+      "options": [
+        { "label": "1)", "text": "Temperature" },
+        { "label": "2)", "text": "Pressure" },
+        { "label": "3)", "text": "Production_Speed" },
+        { "label": "4)", "text": "Material_Score" }
+      ],
+      "answer": 4
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-23-q9",
+      "questionNumber": 9,
+      "partNumber": 2,
+      "prompt": "데이터의 결측치를 다음 가이드에 따라 처리한 후, 대체된 값을 작성하시오.",
+      "hint": "[데이터 가공] 메뉴를 활용하시오.",
+      "guide": "수치형 데이터의 결측치는 '중앙값(Median)'으로 대체한다.\n대체 후 기준 변수는 덮어쓰기 하고 [가공 데이터 저장]을 클릭한다.",
+      "answerType": "float",
+      "answer": "74.8",
+      "tolerance": 1.0
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-23-q10",
+      "questionNumber": 10,
+      "partNumber": 2,
+      "prompt": "문자열로 된 'Machine_Type' 컬럼에 Label Encoding을 적용하면, 각 값에 부여되는 숫자를 작성하시오.\n(힌트: Label Encoding은 알파벳(가나다) 순으로 0부터 번호를 부여합니다.)",
+      "answerType": "text",
+      "answer": "0, 1, 2",
+      "subFields": [
+        { "label": "Type_A", "answerType": "integer", "answer": "0" },
+        { "label": "Type_B", "answerType": "integer", "answer": "1" },
+        { "label": "Type_C", "answerType": "integer", "answer": "2" }
+      ]
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-23-q11",
+      "questionNumber": 11,
+      "partNumber": 3,
+      "prompt": "다음 가이드에 따라 두 가지 모델을 각각 학습시키고, Accuracy를 비교하시오.\n더 높은 성능을 보인 모델은 무엇인가?",
+      "hint": "[AI모델 학습] 메뉴를 활용하시오.",
+      "guide": "공통 가이드:\n- 제외 컬럼: 'Product_ID'\n- 종속변수(Output): 'Defect'\n- 학습/검증 비율: 80 : 20\n\n(1) 알고리즘: Decision Tree Classifier\n(2) 알고리즘: Random Forest Classifier",
+      "answerType": "text",
+      "answer": "Random Forest",
+      "subFields": [
+        { "label": "Decision Tree Accuracy", "answerType": "float", "answer": "0.7938" },
+        { "label": "Random Forest Accuracy", "answerType": "float", "answer": "0.8773" },
+        { "label": "더 좋은 모델", "answerType": "text", "answer": "Random Forest" }
+      ]
+    },
+    {
+      "type": "mcq",
+      "id": "exam-23-q12",
+      "questionNumber": 12,
+      "partNumber": 3,
+      "prompt": "위 문항에서 Random Forest가 Decision Tree보다 일반적으로 성능이 좋은 이유를 고르시오.",
+      "options": [
+        { "label": "1)", "text": "Random Forest는 데이터를 더 많이 사용하기 때문" },
+        { "label": "2)", "text": "여러 개의 Decision Tree를 만들어 다수결로 예측하므로 과적합이 줄어들기 때문" },
+        { "label": "3)", "text": "Random Forest는 딥러닝 알고리즘이기 때문" },
+        { "label": "4)", "text": "Decision Tree는 수치형 데이터를 처리할 수 없기 때문" }
+      ],
+      "answer": 2
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-23-q13",
+      "questionNumber": 13,
+      "partNumber": 4,
+      "prompt": "[AI모델 활용 / 시뮬레이션] 다음 제품의 불량 여부(Defect)를 예측하시오.",
+      "inputValues": "Temperature: 220 (높은 온도, 적정 온도 약 180℃ 대비 과열)\nPressure: 70 (높은 압력)\nProduction_Speed: 150 (빠른 생산 속도)\nMaterial_Score: 40 (낮은 원자재 품질)\nMachine_Type: Type_C",
+      "answerType": "integer",
+      "answer": "1",
+      "unit": "(1: 불량, 0: 정상)"
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-23-q14",
+      "questionNumber": 14,
+      "partNumber": 4,
+      "prompt": "[AI모델 활용 / 시뮬레이션] 다음 제품의 불량 여부(Defect)를 예측하시오.",
+      "inputValues": "Temperature: 178 (적정 온도)\nPressure: 48 (적정 압력)\nProduction_Speed: 80 (적정 생산 속도)\nMaterial_Score: 90 (높은 원자재 품질)\nMachine_Type: Type_A",
+      "answerType": "integer",
+      "answer": "0",
+      "unit": "(1: 불량, 0: 정상)"
+    },
+    {
+      "type": "mcq",
+      "id": "exam-23-q15",
+      "questionNumber": 15,
+      "partNumber": 4,
+      "prompt": "다음 중, AI 모델의 성능 지표인 'Accuracy(정확도)'의 정의로 올바른 것을 고르시오.",
+      "options": [
+        { "label": "1)", "text": "전체 예측 중에서 모델이 올바르게 예측한 비율" },
+        { "label": "2)", "text": "불량이라고 예측한 것 중 실제 불량인 비율" },
+        { "label": "3)", "text": "실제 불량 제품 중 모델이 불량으로 맞힌 비율" },
+        { "label": "4)", "text": "학습 데이터에서의 오차 비율" }
+      ],
+      "answer": 1
+    }
+  ]
+}

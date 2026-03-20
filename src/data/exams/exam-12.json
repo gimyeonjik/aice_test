@@ -1,0 +1,129 @@
+{
+  "id": "exam-12",
+  "examNumber": 12,
+  "title": "게임 캐릭터 스탯 밸런스 분석 (군집화)",
+  "scenario": "당신은 틴틴AI로봇 게임즈의 캐릭터 밸런스 기획자입니다. 유저들이 생성한 12,000개의 캐릭터 스탯(공격력, 방어력 등)을 분석하여, 캐릭터들이 어떤 직업군(탱커, 딜러 등)으로 플레이되고 있는지 특징이 비슷한 그룹끼리 묶어보려 합니다.",
+  "dataset": {
+    "filename": "game_character_stats.csv",
+    "rowCount": "12,000행",
+    "target": null,
+    "targetDescription": "없음 (정답이 없는 비지도 학습 과제)",
+    "taskType": "clustering",
+    "features": ["Character_ID", "Weapon_Type", "Movement_Speed", "Attack_Power", "Defense_Power"],
+    "excludeColumns": ["Character_ID"]
+  },
+  "parts": [
+    { "partNumber": 1, "title": "데이터 분석 및 전처리", "questionRange": [1, 6] },
+    { "partNumber": 2, "title": "AI 모델링 및 시뮬레이션", "questionRange": [7, 9] }
+  ],
+  "questions": [
+    {
+      "type": "mcq",
+      "id": "exam-12-q1",
+      "questionNumber": 1,
+      "partNumber": 1,
+      "prompt": "정답(Target)이 없는 데이터들을 특징이 비슷한 것끼리 그룹으로 나누는 AI 학습 방법은 무엇입니까?",
+      "options": [
+        { "label": "1)", "text": "분류 (Classification)" },
+        { "label": "2)", "text": "회귀 (Regression)" },
+        { "label": "3)", "text": "군집화 (Clustering)" },
+        { "label": "4)", "text": "텍스트 분석 (Text Analysis)" }
+      ],
+      "answer": 3
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-12-q2",
+      "questionNumber": 2,
+      "partNumber": 1,
+      "prompt": "전체 데이터의 개수(Observation)를 작성하시오.",
+      "hint": "[데이터 분석 / 기초정보분석] 메뉴를 활용하시오.",
+      "answerType": "integer",
+      "answer": "12000",
+      "unit": "개"
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-12-q3",
+      "questionNumber": 3,
+      "partNumber": 1,
+      "prompt": "'공격력(Attack_Power)' 변수의 평균(Mean) 값을 확인하여 작성하시오.",
+      "hint": "[데이터 분석 / 기초정보분석] 메뉴를 활용하시오.",
+      "answerType": "float",
+      "answer": "45.09",
+      "tolerance": 1.0
+    },
+    {
+      "type": "mcq",
+      "id": "exam-12-q4",
+      "questionNumber": 4,
+      "partNumber": 1,
+      "prompt": "'공격력(Attack_Power)'을 X축으로, '방어력(Defense_Power)'을 Y축으로 설정하여 산점도(Scatter Plot)를 그리시오. 화면상에서 캐릭터들은 총 몇 개의 덩어리(그룹)로 나뉘어 보입니까?",
+      "hint": "[데이터 분석 / 시각화 분석] 메뉴를 활용하시오.",
+      "options": [
+        { "label": "1)", "text": "2개" },
+        { "label": "2)", "text": "3개" },
+        { "label": "3)", "text": "4개" },
+        { "label": "4)", "text": "5개" }
+      ],
+      "answer": 3
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-12-q5",
+      "questionNumber": 5,
+      "partNumber": 1,
+      "prompt": "데이터의 결측치(Missing Cells)를 다음 가이드에 따라 처리한 후, 'Defense_Power' 변수의 결측치를 대체한 값을 작성하시오.",
+      "hint": "[데이터 가공] 메뉴를 활용하시오.",
+      "guide": "수치형 데이터의 결측치는 '중앙값(Median)'으로 대체한다.\n대체 후 기준 변수는 덮어쓰기 하고 [가공 데이터 저장]을 클릭한다.",
+      "answerType": "float",
+      "answer": "36.0",
+      "tolerance": 1.0
+    },
+    {
+      "type": "action",
+      "id": "exam-12-q6",
+      "questionNumber": 6,
+      "partNumber": 1,
+      "prompt": "문자열로 된 'Weapon_Type(주무기)' 컬럼을 숫자로 변환하시오.",
+      "instruction": "Label Encoding(레이블 인코딩)을 적용하시오."
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-12-q7",
+      "questionNumber": 7,
+      "partNumber": 2,
+      "prompt": "다음 가이드에 따라 군집화 AI 모델을 학습시키시오.\nK-Means 알고리즘 설정 시, 클러스터 수(K)는 몇 개로 설정해야 하는가?",
+      "hint": "[AI모델 학습] 메뉴를 활용하시오.",
+      "guide": "작업 데이터: 가공이 완료된 데이터\n제외 컬럼: 'Character_ID'\n알고리즘: 'K-Means'\n클러스터 수(n_clusters): 문항 4번의 시각화 결과에서 확인한 그룹의 개수 입력",
+      "answerType": "integer",
+      "answer": "4",
+      "unit": "개"
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-12-q8",
+      "questionNumber": 8,
+      "partNumber": 2,
+      "prompt": "학습된 모델 분석 결과, '방어력은 매우 높지만 공격력이 매우 낮은(이른바 탱커)' 그룹은 몇 번 군집(Cluster)인지 기재하시오.",
+      "hint": "[AI모델 활용 / 모델분석] 메뉴를 활용하여, 각 군집별 Attack_Power와 Defense_Power의 평균을 확인하시오.",
+      "answerType": "integer",
+      "answer": "0",
+      "tolerance": 3,
+      "unit": "번 군집"
+    },
+    {
+      "type": "fill-in",
+      "id": "exam-12-q9",
+      "questionNumber": 9,
+      "partNumber": 2,
+      "prompt": "[AI모델 활용 / 시뮬레이션] 다음 신규 생성된 캐릭터는 몇 번 직업군(군집)으로 배정될지 예측하시오.",
+      "hint": "Weapon_Type: Bow, Movement_Speed: 120, Attack_Power: 90 (강한 공격력), Defense_Power: 15 (낮은 방어력)",
+      "inputValues": "Weapon_Type: Bow (또는 인코딩된 숫자)\nMovement_Speed: 120\nAttack_Power: 90\nDefense_Power: 15",
+      "answerType": "integer",
+      "answer": "0",
+      "tolerance": 3,
+      "unit": "번 군집"
+    }
+  ]
+}

@@ -20,10 +20,36 @@ const taskTypeColor: Record<string, string> = {
   classification: "bg-emerald-100/80 text-emerald-700 ring-1 ring-emerald-500/20",
 };
 
+// Group exams by set: 1-10 → 1회, 11-20 → 2회, 21-30 → 3회
+function getSetNumber(examNumber: number): number {
+  return Math.ceil(examNumber / 10);
+}
+
+const examSets = (() => {
+  const sets = new Map<number, typeof examSummaries>();
+  for (const exam of examSummaries) {
+    const setNum = getSetNumber(exam.examNumber);
+    if (!sets.has(setNum)) sets.set(setNum, []);
+    sets.get(setNum)!.push(exam);
+  }
+  // Sort exams within each set by examNumber
+  for (const exams of sets.values()) {
+    exams.sort((a, b) => a.examNumber - b.examNumber);
+  }
+  return Array.from(sets.entries()).sort(([a], [b]) => a - b);
+})();
+
+const setColors = [
+  { tab: "bg-indigo-600 text-white", tabInactive: "bg-slate-100 text-slate-600 hover:bg-slate-200", badge: "bg-indigo-100 text-indigo-700" },
+  { tab: "bg-violet-600 text-white", tabInactive: "bg-slate-100 text-slate-600 hover:bg-slate-200", badge: "bg-violet-100 text-violet-700" },
+  { tab: "bg-cyan-600 text-white", tabInactive: "bg-slate-100 text-slate-600 hover:bg-slate-200", badge: "bg-cyan-100 text-cyan-700" },
+];
+
 export default function HomePage() {
   const router = useRouter();
   const [name, setName] = useState("");
   const [selectedExam, setSelectedExam] = useState<string | null>(null);
+  const [activeSet, setActiveSet] = useState(examSets[0]?.[0] ?? 1);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -46,8 +72,9 @@ export default function HomePage() {
   }
 
   const selected = examSummaries.find((e) => e.id === selectedExam);
+  const currentSetExams = examSets.find(([n]) => n === activeSet)?.[1] ?? [];
 
-  if (!isMounted) return null; // Prevent hydration mismatch for framer-motion
+  if (!isMounted) return null;
 
   return (
     <div className="min-h-screen bg-[#FAFAFC] selection:bg-indigo-100 selection:text-indigo-900 font-sans text-slate-900">
@@ -79,7 +106,7 @@ export default function HomePage() {
       </header>
 
       <main className="relative z-10 max-w-5xl mx-auto px-6 py-12">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -106,9 +133,33 @@ export default function HomePage() {
                 모의고사 선택
               </h3>
             </div>
-            
+
+            {/* Set Tabs */}
+            <div className="flex gap-2">
+              {examSets.map(([setNum, exams], idx) => {
+                const isActive = activeSet === setNum;
+                const colors = setColors[idx % setColors.length];
+                return (
+                  <button
+                    key={setNum}
+                    onClick={() => setActiveSet(setNum)}
+                    className={`px-4 py-2 rounded-xl text-sm font-bold transition-all duration-200 ${
+                      isActive ? colors.tab + " shadow-md" : colors.tabInactive
+                    }`}
+                  >
+                    {setNum}회 세트
+                    <span className={`ml-1.5 text-xs px-1.5 py-0.5 rounded-md ${
+                      isActive ? "bg-white/20" : "bg-slate-200/80"
+                    }`}>
+                      {exams.length}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
             <div className="grid gap-4 sm:grid-cols-2">
-              {examSummaries.map((exam, index) => {
+              {currentSetExams.map((exam, index) => {
                 const isSelected = selectedExam === exam.id;
                 return (
                   <motion.button
@@ -144,11 +195,11 @@ export default function HomePage() {
                         </motion.div>
                       )}
                     </div>
-                    
+
                     <h4 className={`text-lg font-bold mb-2 ${isSelected ? "text-indigo-900" : "text-slate-800"}`}>
                       {exam.title}
                     </h4>
-                    
+
                     <div className="space-y-1.5 mt-4">
                       <div className="flex items-center gap-2 text-sm text-slate-500">
                         <Database className="w-4 h-4 text-slate-400" />
@@ -167,7 +218,7 @@ export default function HomePage() {
 
           {/* Right Column: User Info & Actions */}
           <div className="space-y-6">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}

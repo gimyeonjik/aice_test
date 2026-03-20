@@ -10,6 +10,11 @@ import exam7 from "@/data/exams/exam-7.json";
 import exam8 from "@/data/exams/exam-8.json";
 import exam9 from "@/data/exams/exam-9.json";
 import exam10 from "@/data/exams/exam-10.json";
+import exam11 from "@/data/exams/exam-11.json";
+import exam12 from "@/data/exams/exam-12.json";
+import exam21 from "@/data/exams/exam-21.json";
+import exam22 from "@/data/exams/exam-22.json";
+import exam23 from "@/data/exams/exam-23.json";
 
 const exams: Record<string, Exam> = {
   "exam-1": exam1 as unknown as Exam,
@@ -22,6 +27,11 @@ const exams: Record<string, Exam> = {
   "exam-8": exam8 as unknown as Exam,
   "exam-9": exam9 as unknown as Exam,
   "exam-10": exam10 as unknown as Exam,
+  "exam-11": exam11 as unknown as Exam,
+  "exam-12": exam12 as unknown as Exam,
+  "exam-21": exam21 as unknown as Exam,
+  "exam-22": exam22 as unknown as Exam,
+  "exam-23": exam23 as unknown as Exam,
 };
 
 export function getExam(examId: string): Exam | null {
